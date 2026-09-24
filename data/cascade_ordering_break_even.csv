@@ -1,0 +1,4 @@
+decision,left_quantity,right_quantity,left_decimal,right_decimal,difference_or_threshold,verdict
+order I1 before I2,c1*S_J2,c2*S_J1,96.582948456357,1078.801979174188,-982.219030717831,I1 -> I2 is cheaper
+add I2 after J1,critical fallback cost,chosen fallback cost,2.521645794127,100.000000000000,4685.108285480494,reduces expected workload
+add I3 after J2,critical fallback cost,chosen fallback cost,76.624792190782,100.000000000000,41.696316632660,reduces expected workload

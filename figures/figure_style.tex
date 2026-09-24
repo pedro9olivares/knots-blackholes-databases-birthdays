@@ -1,0 +1,44 @@
+% Shared Figure architecture visual system for all four main-text figures.
+\usepackage[T1]{fontenc}
+\usepackage{charter}
+\usepackage[scaled=0.90]{helvet}
+\usepackage{amsmath,amssymb}
+\renewcommand{\Pr}{\mathbb{P}}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usetikzlibrary{arrows.meta,calc,positioning,fit,decorations.pathreplacing,shapes.geometric,backgrounds}
+\definecolor{figNavy}{RGB}{0,63,92}
+\definecolor{figBlue}{RGB}{0,101,165}
+\definecolor{figSky}{RGB}{226,241,249}
+\definecolor{figTeal}{RGB}{0,125,112}
+\definecolor{figMint}{RGB}{224,243,239}
+\definecolor{figOrange}{RGB}{222,102,35}
+\definecolor{figPeach}{RGB}{252,235,224}
+\definecolor{figRed}{RGB}{145,43,55}
+\definecolor{figInk}{RGB}{35,45,51}
+\definecolor{figGray}{RGB}{103,115,123}
+\definecolor{figRule}{RGB}{194,202,208}
+\definecolor{figPale}{RGB}{248,250,251}
+\definecolor{figWhite}{RGB}{255,255,255}
+\tikzset{
+  figpanel/.style={draw=figRule,line width=0.55pt,rounded corners=2.4pt,fill=figWhite},
+  figtag/.style={circle,fill=figBlue,text=figWhite,minimum size=4.3mm,inner sep=0pt,font=\sffamily\bfseries\fontsize{7.5}{8}\selectfont},
+  figtitle/.style={font=\sffamily\bfseries\fontsize{8.5}{10}\selectfont,text=figNavy,anchor=west},
+  figsubtitle/.style={font=\sffamily\fontsize{6.8}{8}\selectfont,text=figGray,align=left},
+  figbody/.style={font=\sffamily\fontsize{7}{8.4}\selectfont,text=figInk,align=center},
+  figsmall/.style={font=\sffamily\fontsize{6.2}{7.4}\selectfont,text=figGray,align=center},
+  figmath/.style={font=\fontsize{7.4}{8.8}\selectfont,text=figInk,align=center},
+  figflow/.style={-{Stealth[length=2.0mm,width=1.4mm]},draw=figBlue,line width=0.85pt},
+  figflowgray/.style={-{Stealth[length=1.8mm,width=1.25mm]},draw=figGray,line width=0.75pt},
+  figfloworange/.style={-{Stealth[length=2.0mm,width=1.4mm]},draw=figOrange,line width=0.85pt},
+  figbluebox/.style={draw=figBlue,line width=0.65pt,fill=figSky,rounded corners=2.2pt},
+  figorangebox/.style={draw=figOrange,line width=0.65pt,fill=figPeach,rounded corners=2.2pt},
+  figtealbox/.style={draw=figTeal,line width=0.65pt,fill=figMint,rounded corners=2.2pt},
+  figgraybox/.style={draw=figRule,line width=0.6pt,fill=figPale,rounded corners=2.2pt},
+}
+\newcommand{\PanelHeading}[4]{%
+  \node[figtag] at (#1,#2) {#3};%
+  \node[figtitle] at ({#1+0.32},#2) {#4};%
+}

@@ -1,0 +1,147 @@
+{
+  "status": "PASS",
+  "detector": "structured_opened_trefoil_v2",
+  "selection_policy": {
+    "one_straight_ahead_component": true,
+    "minimum_certified_slots": 1,
+    "disclosure": "The displayed atlas is explicitly conditioned on certified-slot count."
+  },
+  "proposals_examined": 454,
+  "one_component_proposals": 82,
+  "certified_counts": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+  ],
+  "certified_total": 10,
+  "html_overlay_total": 10,
+  "records": [
+    {
+      "panel": 1,
+      "seed": 9324010,
+      "certified_count": 1,
+      "rotation_signatures": [
+        [
+          1,
+          0,
+          1
+        ]
+      ]
+    },
+    {
+      "panel": 2,
+      "seed": 9324025,
+      "certified_count": 1,
+      "rotation_signatures": [
+        [
+          0,
+          1,
+          0
+        ]
+      ]
+    },
+    {
+      "panel": 3,
+      "seed": 9324051,
+      "certified_count": 1,
+      "rotation_signatures": [
+        [
+          1,
+          0,
+          1
+        ]
+      ]
+    },
+    {
+      "panel": 4,
+      "seed": 9324105,
+      "certified_count": 1,
+      "rotation_signatures": [
+        [
+          1,
+          0,
+          1
+        ]
+      ]
+    },
+    {
+      "panel": 5,
+      "seed": 9324285,
+      "certified_count": 1,
+      "rotation_signatures": [
+        [
+          0,
+          1,
+          0
+        ]
+      ]
+    },
+    {
+      "panel": 6,
+      "seed": 9324308,
+      "certified_count": 1,
+      "rotation_signatures": [
+        [
+          0,
+          1,
+          0
+        ]
+      ]
+    },
+    {
+      "panel": 7,
+      "seed": 9324312,
+      "certified_count": 1,
+      "rotation_signatures": [
+        [
+          1,
+          0,
+          1
+        ]
+      ]
+    },
+    {
+      "panel": 8,
+      "seed": 9324352,
+      "certified_count": 1,
+      "rotation_signatures": [
+        [
+          1,
+          0,
+          1
+        ]
+      ]
+    },
+    {
+      "panel": 9,
+      "seed": 9324399,
+      "certified_count": 1,
+      "rotation_signatures": [
+        [
+          0,
+          1,
+          0
+        ]
+      ]
+    },
+    {
+      "panel": 10,
+      "seed": 9324454,
+      "certified_count": 1,
+      "rotation_signatures": [
+        [
+          0,
+          1,
+          0
+        ]
+      ]
+    }
+  ]
+}

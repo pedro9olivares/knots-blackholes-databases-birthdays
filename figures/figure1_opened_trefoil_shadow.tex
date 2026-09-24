@@ -1,0 +1,66 @@
+\documentclass[tikz,border=3pt]{standalone}
+\input{figure_style.tex}
+
+\begin{document}
+\begin{tikzpicture}[x=1.18cm,y=1.18cm]
+  \coordinate (v1) at (-1.00,-0.35);
+  \coordinate (v2) at ( 0.00, 0.95);
+  \coordinate (v3) at ( 1.00,-0.35);
+  \coordinate (pm) at (-1.92,-0.62);
+  \coordinate (pp) at ( 1.92,-0.62);
+  \coordinate (xm) at (-2.62,-0.22);
+  \coordinate (xp) at ( 2.62,-0.22);
+
+  % Structured tangle disk; its label sits above the boundary and strands.
+  \draw[draw=figOrange,line width=0.78pt,rounded corners=9pt]
+    (-1.92,-0.78) rectangle (1.92,1.43);
+  \node[
+    font=\sffamily\fontsize{7.0}{8.2}\selectfont,
+    text=figOrange,
+    anchor=south east
+  ] at (1.88,1.54) {structured tangle disk $\Delta$};
+
+  % The two joining edges and their initial segments inside the disk.
+  \draw[figflowgray] (xm) -- (pm);
+  \draw[figflowgray] (pp) -- (xp);
+  \draw[figflow] (pm) -- (v1);
+  \draw[figflow] (v3) -- (pp);
+
+  % Five internal edges: multiplicities 2,2,1.
+  \draw[draw=figInk,line width=0.86pt,line cap=round]
+    (v1) .. controls (-1.52,0.28) and (-0.78,1.38) .. (v2);
+  \draw[draw=figInk,line width=0.86pt,line cap=round]
+    (v1) .. controls (-0.58,-0.04) and (-0.38,0.65) .. (v2);
+  \draw[draw=figInk,line width=0.86pt,line cap=round]
+    (v2) .. controls (0.38,0.65) and (0.58,-0.04) .. (v3);
+  \draw[draw=figInk,line width=0.86pt,line cap=round]
+    (v2) .. controls (0.78,1.38) and (1.52,0.28) .. (v3);
+  \draw[draw=figInk,line width=0.86pt,line cap=round]
+    (v3) .. controls (0.48,-0.30) and (-0.48,-0.30) .. (v1);
+
+  % Crossing vertices and the two boundary cut points.
+  \foreach \p in {v1,v2,v3}
+    \filldraw[fill=figBlue,draw=figInk,line width=0.32pt]
+      (\p) circle (1.75pt);
+  \filldraw[fill=figWhite,draw=figOrange,line width=0.78pt]
+    (pm) circle (1.70pt);
+  \filldraw[fill=figWhite,draw=figOrange,line width=0.78pt]
+    (pp) circle (1.70pt);
+
+  % Minimal mathematical labels.
+  \node[font=\fontsize{7.0}{8.2}\selectfont,text=figNavy,anchor=north]
+    at (v1) {$v_1$};
+  \node[font=\fontsize{7.0}{8.2}\selectfont,text=figNavy,anchor=south]
+    at (v2) {$v_2$};
+  \node[font=\fontsize{7.0}{8.2}\selectfont,text=figNavy,anchor=north]
+    at (v3) {$v_3$};
+  \node[font=\fontsize{6.8}{8.0}\selectfont,text=figOrange,anchor=east]
+    at (-1.99,-0.64) {$p^-$};
+  \node[font=\fontsize{6.8}{8.0}\selectfont,text=figOrange,anchor=west]
+    at (1.99,-0.64) {$p^+$};
+  \node[font=\fontsize{7.0}{8.2}\selectfont,text=figBlue]
+    at (-1.46,-0.30) {$e^-$};
+  \node[font=\fontsize{7.0}{8.2}\selectfont,text=figBlue]
+    at (1.46,-0.30) {$e^+$};
+\end{tikzpicture}
+\end{document}

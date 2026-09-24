@@ -1,0 +1,67 @@
+\documentclass[tikz,border=2pt]{standalone}
+\input{figure_style.tex}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm]
+\draw[figpanel] (0,0) rectangle (17.20,5.72);
+
+% Fiber profiles and their collision curves.
+\node[figtitle] at (0.28,5.42) {Support size and collision probability};
+\node[figsubtitle,anchor=north west,text width=16.45cm] at (0.25,5.08)
+  {Both profiles contain $T=1000$ entries. Profile A has larger support, but $M_{50}(A)=17<38=M_{50}(B)$.};
+
+% Center the two profile cards in the figure body with roomier internal spacing.
+\begin{scope}[xshift=0.55cm,yshift=-0.38cm]
+% Profile A card.
+\draw[draw=figRed,line width=0.65pt,fill=figPeach,rounded corners=2.2pt] (0.27,2.90) rectangle (6.27,4.40);
+\node[figbody,text=figRed,anchor=west] at (0.47,4.10) {Profile A};
+\draw[fill=figRed!82,draw=figRed,line width=0.5pt,rounded corners=1.2pt] (0.47,3.45) rectangle (1.75,3.82);
+\node[font=\sffamily\fontsize{6.3}{7.2}\selectfont,text=white] at (1.11,3.635) {one fiber: 101};
+\foreach \x in {2.10,2.33,2.56,2.79,3.02,3.25,3.48,3.71,3.94,4.17}{\fill[figRed!65] (\x,3.635) circle (1.25pt);}
+\node[figsmall,anchor=west] at (4.37,3.635) {$+\ 899$ singletons};
+\node[figsmall,anchor=west,text=figInk] at (0.47,3.15) {$R/T=0.90,\quad \alpha_A^{\mathrm{neq}}=101/9990,\quad M_{50}=17$};
+
+% Profile B card.
+\draw[draw=figBlue,line width=0.65pt,fill=figSky,rounded corners=2.2pt] (0.27,1.18) rectangle (6.27,2.68);
+\node[figbody,text=figBlue,anchor=west] at (0.47,2.39) {Profile B};
+\foreach \x in {0.55,0.97,1.39,1.81,2.23,2.65,3.07,3.49,3.91,4.33}{
+  \fill[figBlue] (\x,1.93) circle (1.5pt);
+  \fill[figBlue] (\x+0.12,1.93) circle (1.5pt);
+  \draw[figBlue,line width=0.5pt] (\x,1.93)--(\x+0.12,1.93);
+}
+\node[figsmall,anchor=west] at (4.59,1.93) {$500$ pairs};
+\node[figsmall,anchor=west,text=figInk] at (0.47,1.43) {$R/T=0.50,\quad \alpha_B^{\mathrm{neq}}=1/999,\quad M_{50}=38$};
+\end{scope}
+
+% Collision curves after the fiber-profile comparison.
+\begin{scope}[xshift=6.75cm]
+\begin{axis}[
+ at={(2.25cm,1.08cm)},
+ anchor=south west,
+ width=8.55cm,
+ height=4.55cm,
+ xmin=0,xmax=75,
+ ymin=0,ymax=1.02,
+ xlabel={database size $M$},
+ ylabel={$\Pr\{C_M^{\mathrm{fp}}>0\}$},
+ tick label style={font=\sffamily\fontsize{6.2}{7.2}\selectfont,text=figGray},
+ label style={font=\sffamily\fontsize{6.7}{7.8}\selectfont,text=figInk},
+ legend style={font=\sffamily\fontsize{5.4}{6.3}\selectfont,draw=none,fill=white,fill opacity=.90,text opacity=1,at={(0.98,0.03)},anchor=south east,row sep=0.7pt,inner sep=1.5pt},
+ axis line style={draw=figGray,line width=0.45pt},
+ major grid style={draw=figRule!55,line width=0.35pt},
+ grid=major,
+ xtick={0,10,20,30,40,50,60,70},
+ ytick={0,0.25,0.5,0.75,1},
+]
+\addplot[figRed,line width=1.35pt] table[x=M,y=p_collision_A,col sep=comma]{../data/finite_no_collision_curves.csv};
+\addlegendentry{A: $(101,1^{899})$}
+\addplot[figBlue,line width=1.35pt,dashed] table[x=M,y=p_collision_B,col sep=comma]{../data/finite_no_collision_curves.csv};
+\addlegendentry{B: $(2^{500})$}
+\addplot[figGray,densely dotted,line width=0.75pt,domain=0:75,samples=2] {0.5};
+\addplot[only marks,mark=*,mark size=2.0pt,figRed] coordinates {(17,0.5255246908)};
+\addplot[only marks,mark=square*,mark size=2.0pt,figBlue] coordinates {(38,0.5183676794)};
+\node[font=\sffamily\fontsize{6.0}{7.0}\selectfont,text=figRed,anchor=south west] at (axis cs:21.2,0.535) {$M_{50}=17$};
+\node[font=\sffamily\fontsize{6.0}{7.0}\selectfont,text=figBlue,anchor=north west] at (axis cs:39.2,0.49) {$M_{50}=38$};
+\end{axis}
+\end{scope}
+\end{tikzpicture}
+\end{document}

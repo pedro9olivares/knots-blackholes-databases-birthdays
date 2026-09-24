@@ -1,0 +1,3 @@
+profile,description,T,R,support_fraction,alpha_wr_exact,alpha_wr_decimal,alpha_neq_exact,alpha_neq_decimal,alpha_neq_inverse_sqrt,M50
+A,one fiber of size 101 and 899 singleton fibers,1000,900,0.900000000000,111/10000,0.0111,101/9990,0.0101101101101101,9.945395471730,17
+B,500 doubleton fibers,1000,500,0.500000000000,1/500,0.002,1/999,0.001001001001001,31.606961258558,38
