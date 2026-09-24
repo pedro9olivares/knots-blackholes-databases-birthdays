@@ -1,0 +1,2193 @@
+% Official PNAS Supporting Information entry point.
+% Uses the bundled official PNAS class and Supporting Information style.
+\documentclass[9pt,twoside]{pnas-new}
+\providecommand{\articletype}[1]{}
+% BEGIN INLINED FILE: supporting_information_source.tex
+\articletype{MATHEMATICS}
+\templatetype{pnassupportinginfo}
+% pnas-new.cls v1.47 creates the line-number counter only when its main-text
+% first-page style is activated.  The official SI style uses the regular
+% fancy style directly, so initialize the same counter for SI compilation.
+\makeatletter
+\@ifundefined{PNAS@linecount}{\newcount\PNAS@linecount}{}
+\PNAS@linecount\@ne\relax
+\makeatother
+% The legacy SI style's authoraftertitle package drops authblk's optional
+% affiliation argument. Restore the official class's authblk command before
+% reading the shared letter-coded author metadata.
+\makeatletter
+\@ifundefined{Originalauthor}{}{\let\author\Originalauthor}
+\makeatother
+\dates{Preprint: arXiv:2609.08298v1, submitted September 8, 2026, under the \href{https://arxiv.org/licenses/nonexclusive-distrib/1.0/}{arXiv nonexclusive distribution license}.}
+\doi{}
+% BEGIN INLINED FILE: macros.tex
+\usepackage{fix-cm}
+\usepackage{mathtools}
+\usepackage[T1]{fontenc}
+% Use a scalable Type 1 monospaced face for code paths in the SI.
+\usepackage{courier}
+\usepackage{amsthm}
+\usepackage{bm}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,calc,positioning,fit,decorations.pathreplacing}
+\usepackage{enumitem}
+\usepackage{url}
+\usepackage{tabularx}
+\usepackage{placeins}
+\usepackage{float}
+\usepackage{needspace}
+
+% Project-owned colors: do not depend on color names defined by a journal class.
+\definecolor{knotBlue}{RGB}{0,101,165}
+\definecolor{knotOrange}{RGB}{224,96,24}
+\definecolor{knotRed}{RGB}{130,0,0}
+\definecolor{knotLightBlue}{RGB}{239,246,250}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\Prob}{\mathbb P}
+\renewcommand{\Pr}{\mathbb{P}}
+\newcommand{\E}{\mathbb E}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\BH}{\mathcal B}
+\newcommand{\crit}{\mathrm{crit}}
+\newcommand{\neqp}{\mathrm{neq}}
+\newcommand{\wrp}{\mathrm{wr}}
+
+\newcommand{\ScaffoldNotice}{}
+
+% BEGIN INLINED FILE: si_concordance_macros.tex
+% Stable textual references from the main article to the separately compiled SI.
+% Stage 14 verifies every number below against si/build/si.aux.
+\newcommand{\SILocation}[1]{SI Appendix, #1}
+\newcommand{\SIShadowSignLaw}{Lemma~S1.1}
+\newcommand{\SIExactCollisionCalculus}{Theorem~S2.2}
+\newcommand{\SIUniversalBirthdayLaw}{Theorem~S2.3}
+\newcommand{\SIInverseBirthdayPhenomenon}{Corollary~S2.4}
+\newcommand{\SIPoissonWindow}{Theorem~S2.5}
+\newcommand{\SIHeavyAtomCounterexample}{Proposition~S2.6}
+\newcommand{\SILatticeSmoothing}{Lemma~S3.1}
+\newcommand{\SIConditionalLocalBlock}{Theorem~S3.3}
+\newcommand{\SIOpenedTrefoilAdmissibility}{Lemma~S4.1}
+\newcommand{\SIShadowTransfer}{Lemma~S4.2}
+\newcommand{\SIShadowSelection}{Lemma~S4.3}
+\newcommand{\SIGenuineInterface}{Lemma~S4.5}
+\newcommand{\SIDistanceThreeBuffer}{Corollary~S4.6}
+\newcommand{\SISimultaneousSeparators}{Lemma~S4.7}
+\newcommand{\SITwoBraidClosure}{Lemma~S4.8}
+\newcommand{\SIPersistentFactorization}{Proposition~S4.9}
+\newcommand{\SIBinomialAtom}{Lemma~S4.10}
+\newcommand{\SIDeterminantAntiConcentration}{Theorem~S4.11}
+\newcommand{\SIDeterminantEntropy}{Corollary~S4.12}
+\newcommand{\SIFallbackIdentities}{Proposition~S5.1}
+\newcommand{\SIRandomPairBlackHole}{Corollary~S5.2}
+\newcommand{\SIFixedDeterminant}{Theorem~S5.3}
+\newcommand{\SIFixedKnot}{Corollary~S5.4}
+\newcommand{\SIRefinementMonotonicity}{Proposition~S5.6}
+\newcommand{\SIDeterminantComplexity}{Proposition~S5.7}
+\newcommand{\SINoFallbackDatabase}{Corollary~S5.8}
+\newcommand{\SIMachineLearningBenchmark}{Proposition~S5.9}
+\newcommand{\SIFiniteMoments}{Theorem~S6.1}
+\newcommand{\SIFiniteRelativeVariance}{Corollary~S6.2}
+\newcommand{\SIFiniteBirthdayLaw}{Theorem~S6.3}
+\newcommand{\SIExactFiniteCurves}{Theorem~S6.4}
+\newcommand{\SIBalancedFibers}{Theorem~S6.5}
+\newcommand{\SISupportCompression}{Corollary~S6.6}
+\newcommand{\SIFiniteBenchmark}{Proposition~S7.1}
+\newcommand{\SICascadeSingletons}{Lemma~S8.1}
+\newcommand{\SICascadePairs}{Lemma~S8.2}
+\newcommand{\SICascadeWorkload}{Theorem~S8.3}
+\newcommand{\SICascadeOrdering}{Proposition~S8.4}
+\newcommand{\SICascadeBreakEven}{Proposition~S8.5}
+\newcommand{\SIBenchmarkProtocolSection}{Section~S7}
+\newcommand{\SIReproducibilitySection}{Section~S9}
+\newcommand{\SIDeterminantRefinementTable}{Table~S4}
+% END INLINED FILE: si_concordance_macros.tex
+% END INLINED FILE: macros.tex
+% Namespace SI anchors so separately compiled PDFs can be concatenated safely.
+\renewcommand*{\HyperDestNameFilter}[1]{SI.#1}
+% Submission output; the class also inserts a redundant LastPage label.
+\setboolean{displaywatermark}{false}
+\makeatletter
+\patchcmd{\endthebibliography}{\label{LastPage}}{}{}{}
+\makeatother
+\begin{document}
+\raggedbottom
+\title{Knots, black holes, databases, and birthdays: Collision entropy of knot invariants}
+\makeatletter
+\renewcommand\@author{\ifx\AB@affillist\AB@empty\AB@author\else
+  \ifnum\value{affil}>\value{Maxaffil}\def\rlap##1{##1}%
+    \AB@authlist\\[\affilsep]\AB@affillist
+  \else\AB@authors\fi\fi}
+\makeatother
+% BEGIN INLINED FILE: author_metadata.tex
+% PNAS uses letters for affiliations and numbers for author notes.
+\author[a,d]{Pedro Olivares-S\'anchez}
+\author[b,d]{Edison Jessie V\'azquez Gordillo}
+\author[c]{Radmila Sazdanovi\'c}
+\author[d]{Carlos Alfonso Ruiz Guido}
+\author[e]{Aldo Guzm\'an-S\'aenz}
+\author[f]{Renato Osvaldo Salmer\'on-Garc\'ia}
+\author[b]{Ramiro L\'opez-V\'azquez}
+\author[b,1]{Ernesto Lupercio}
+
+\affil[a]{Department of Mathematics, Instituto Tecnol\'ogico Aut\'onomo de M\'exico (ITAM), Mexico City 01080, Mexico}
+\affil[b]{Department of Mathematics, Centro de Investigaci\'on y de Estudios Avanzados del Instituto Polit\'ecnico Nacional (CINVESTAV-IPN), Mexico City 07360, Mexico}
+\affil[c]{Department of Mathematics, North Carolina State University, Raleigh, NC 27695, USA}
+\affil[d]{Colegio de Matem\'aticas Bourbaki, M\'erida, Yucat\'an 97134, Mexico}
+\affil[e]{Independent Researcher, Atlatlahucan, Morelos 62845, Mexico}
+\affil[f]{School of Engineering and Sciences, Tecnol\'ogico de Monterrey, Campus Santa Fe, Mexico City 01389, Mexico}
+% END INLINED FILE: author_metadata.tex
+\renewcommand{\MyAuthor}{Olivares-S\'anchez et al.}
+\correspondingauthor{\textsuperscript{1}To whom correspondence should be addressed: Ernesto Lupercio, Department of Mathematics, CINVESTAV-IPN, Av. Instituto Polit\'ecnico Nacional 2508, Col. San Pedro Zacatenco, Gustavo A. Madero, Mexico City 07360, Mexico. Phone: +52 55 5747 3868; Email: \href{mailto:lupercio@math.cinvestav.mx}{lupercio@math.cinvestav.mx}.}
+\maketitle
+\SItext
+\renewcommand{\thesection}{S\arabic{section}}
+\renewcommand{\thesubsection}{\thesection.\arabic{subsection}}
+\makeatletter
+\@addtoreset{theorem}{section}
+\makeatother
+\renewcommand{\thetheorem}{S\arabic{section}.\arabic{theorem}}
+\numberwithin{equation}{section}
+\renewcommand{\theequation}{S\arabic{section}.\arabic{equation}}
+\renewcommand{\thefigure}{S\arabic{figure}}
+\renewcommand{\thetable}{S\arabic{table}}
+% BEGIN INLINED FILE: si/sections/S0_guide.tex
+\section*{Guide to the Supporting Information}
+\label{sec:si-guide}
+A knot invariant assigns the same value to equivalent knots, although inequivalent knots may share that value. It can therefore be used as a fingerprint: unequal values disprove equivalence, while equal values leave the comparison unresolved. For one random pair, the unresolved probability is the collision probability of the fingerprint. A database of $M$ objects contains $\binom M2$ pairs, so a fingerprint that usually separates one pair may still collide somewhere in a growing database. The Supporting Information treats both questions and keeps their sampling laws separate.
+
+Four probability laws are used. Under RD, a rooted random diagram is sampled from one of Chapman's two diagram classes. Under FT, one knot is fixed and compared with an RD object. Under DB, the database entries are independent samples. Under FC, a fixed finite census is sampled without replacement. Some estimates in Section~S3 are abstract probability statements that do not require a random-diagram model; the table marks them as ``abstract.'' Each theorem states the law to which it applies.
+
+Sections~S2--S5 combine the collision calculation with determinant anti-concentration obtained from Chapman's trefoil slots. Sections~S6--S8 use exact fiber counts for finite-census collision probabilities and cascade workloads. The shorthand below records the logical dependencies.
+
+The logical structure is
+\[
+\begin{gathered}
+\text{collision calculus}\longrightarrow\text{birthday scale}
+\longrightarrow\text{black-hole identities},\\
+\text{Chapman patterns}\longrightarrow\text{trefoil slots}
+\longrightarrow\text{binomial valuation coordinate},\\
+\text{binomial coordinate}\longrightarrow\text{determinant anti-concentration},\\
+\text{finite fiber sizes}\longrightarrow\text{collision probabilities}
+\longrightarrow\text{adaptive workloads}.
+\end{gathered}
+\]
+
+\begin{table}[ht]
+\centering
+\caption{Organization and probability laws.}
+\label{tab:si-contents-inventory}
+\begin{tabularx}{\textwidth}{>{\bfseries}p{0.065\textwidth}>{\raggedright\arraybackslash}p{0.22\textwidth}>{\raggedright\arraybackslash}X>{\centering\arraybackslash}p{0.10\textwidth}}
+\toprule
+Section & Subject & Results & Law \\
+\midrule
+S1 & Models, notation, and normalization & rooted shadow--sign product law and distinction among sampling laws & all \\
+S2 & Collisions in independent samples & collision moments, zero--one birthday law, Poisson limit under diffuseness & DB \\
+S3 & Local-block anti-concentration & lattice smoothing and conditional anti-concentration & abstract/RD \\
+S4 & Random diagrams and trefoil slots & persistent factorization, hidden binomial coordinate, determinant anti-concentration & RD \\
+S5 & Fixed targets, refinements, and computation & black-hole identities, exponential fixed-target rarity, determinant refinements, bit complexity & RD/FT/DB \\
+S6 & Collisions in a finite census & collision moments, birthday curves, balanced-fiber extremum & FC \\
+S7 & Explicit finite benchmarks & data requirements and a support--capacity example & FC \\
+S8 & Adaptive invariant cascades & survivor, pair, ordering, and break-even formulas & FC \\
+S9 & Computations and source files & repository for figures, supporting programs, and the combined PDF & all \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{table}[ht]
+\centering
+\caption{Main-text results and their proofs in the Supporting Information.}
+\label{tab:si-main-proof-map}
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{0.36\textwidth}>{\raggedright\arraybackslash}X}
+\toprule
+Main-text result & Proof in the Supporting Information \\
+\midrule
+Universal inverse birthday law & Theorem~\ref{thm:si-zero-one}, based on Theorem~\ref{thm:si-collision-calculus} \\
+Inverse birthday phenomenon & Corollary~\ref{cor:si-inverse-birthday} \\
+Determinant anti-concentration & Theorem~\ref{thm:si-det-anti}, with Lemmas~\ref{lem:Q-admissible}--\ref{lem:shadow-selection}, Remark~\ref{rem:order-of-exposure}, Lemma~\ref{lem:genuine-two-edge}, Corollary~\ref{cor:distance-three-buffer}, Lemmas~\ref{lem:simultaneous-separators}--\ref{lem:two-braid-closure}, Proposition~\ref{prop:persistent-factorization}, and Lemma~\ref{lem:binomial-atom} \\
+Black-hole and workload identities & Proposition~\ref{prop:si-black-hole-identities} \\
+Vanishing random-pair black hole & Corollary~\ref{cor:si-random-black-hole} \\
+Exponential fixed-target black hole & Theorem~\ref{thm:si-fixed-determinant} and Corollary~\ref{cor:si-fixed-knot} \\
+Collision-free independent databases & Corollary~\ref{cor:si-no-fallback} \\
+Finite-population birthday formulas & Theorems~\ref{si:thm:finite-moments} and \ref{si:thm:exact-finite-curves} \\
+Expected workload of an adaptive cascade & Theorem~\ref{si:thm:cascade-workload}, with Propositions~\ref{si:prop:ordering} and \ref{si:prop:break-even} \\
+\bottomrule
+\end{tabularx}
+\end{table}
+\FloatBarrier
+% END INLINED FILE: si/sections/S0_guide.tex
+% BEGIN INLINED FILE: si/sections/S1_models_notation.tex
+\section{Models, notation, and normalization}
+\label{sec:si-models}
+A knot diagram is a plane projection of a knot together with the over--under choice at every crossing. Forgetting those choices leaves its \emph{shadow}: a quartic planar map whose opposite-half-edge continuation records the projected components. Restoring one of the two crossing choices at every vertex turns the shadow back into a decorated diagram.
+
+We use Chapman's rooted one-component models. A root distinguishes a map dart, and the one-component condition says that straight-ahead continuation forms a single circuit. For $\star\in\{\mathrm{gen},\mathrm{red}\}$, let $\mathcal D_n^{\star}$ denote the rooted diagrams with $n$ crossings in the general or reduced class, and let $\mathcal S_n^{\star}$ denote their shadows. The reduced condition, like the one-component condition, depends only on the shadow. This separation between the shadow and its crossing signs is essential below: the trefoil slots will be selected from the shadow before their signs are exposed.
+
+\begin{lemma}[Shadow--sign product law]
+\label{lem:shadow-sign-product}
+Every $S\in\mathcal S_n^{\star}$ has exactly $2^n$ decorated lifts in $\mathcal D_n^{\star}$. Consequently, a uniform $D_n\in\mathcal D_n^{\star}$ is sampled exactly by first choosing a uniform $S_n\in\mathcal S_n^{\star}$ and then assigning independent fair signs to its $n$ crossing vertices.
+\end{lemma}
+
+\begin{proof}
+Each crossing vertex admits two over--under choices. Because the rooted shadow is fixed and the root is retained, distinct sign vectors give distinct rooted diagrams; the one-component and reduced conditions remain unchanged under decoration. Thus every admitted shadow has the same fiber size $2^n$, and the uniform law factors as claimed.
+\end{proof}
+
+Equivalently, for a rooted shadow $S$ and sign vector $\varepsilon\in\{-1,+1\}^{V(S)}$,
+\begin{equation}
+ \Pr\{S_n=S,\,\varepsilon_n=\varepsilon\}
+ =\frac{1}{\lvert\mathcal S_n^{\star}\rvert}\,2^{-n}.
+ \label{eq:shadow-sign-product}
+\end{equation}
+Sections S4--S5 concern only these rooted general and rooted reduced ensembles. No assertion is made for unrooted diagrams, for further restrictions such as graph-primality, or for a uniform distribution on knot types.
+
+The determinant is used because it is multiplicative under connected sum, the unknot has determinant $1$, and either trefoil has determinant $3$. Thus each trefoil factor contributes one unit to the exponent of $3$ in the determinant. For a knot $K$, we normalize
+\[
+ \det K:=\lvert\Delta_K(-1)\rvert,
+\]
+where $\Delta_K$ is the Alexander polynomial normalized by $\Delta_K(t)=\Delta_K(t^{-1})$ and $\Delta_K(1)=1$. For a positive integer $m$, $v_3(m)$ is the exponent of $3$ in its prime factorization. Independent copies are denoted by primes, as in $D_n'$. Database samples are independent unless a finite-census law is explicitly declared.
+
+\begin{table}[ht]
+\centering
+\caption{Sampling laws used in the Supporting Information.}
+\label{tab:ensemble-firewall}
+\begin{tabular}{lll}
+\toprule
+Code & Population & Result \\
+\midrule
+RD & rooted random diagrams & asymptotic trefoil-slot theorem \\
+FT & one fixed target plus an RD object & exponential one-atom estimate \\
+DB & independent database & universal collision law \\
+FC & finite census, no replacement & finite-population formulas \\
+\bottomrule
+\end{tabular}
+\end{table}
+% END INLINED FILE: si/sections/S1_models_notation.tex
+% BEGIN INLINED FILE: si/sections/S2_collision_calculus.tex
+\section{Collisions in independent samples}
+\label{si:collision-calculus}
+
+At level $n$, let the fingerprint have a discrete law with finite or countable support. The off-critical zero--one law below requires no additional regularity; the critical window is treated separately.
+
+\subsection{Collision mass, largest atoms, and power sums}
+For each $n$, let $X_n$ be discrete, and let $V_n$ denote its set of possible values. With this ambient $n$ fixed, write
+\[
+p_v=\Pr\{X_n=v\},\qquad v\in V_n,
+\]
+and define
+\begin{equation}
+\alpha_n:=\sum_{v\in V_n}p_v^2,
+\qquad
+\beta_n:=\sum_{v\in V_n}p_v^3,
+\qquad
+p_n^{\max}:=\sup_{v\in V_n}p_v.
+\label{eq:si-power-sums}
+\end{equation}
+For an independent copy $X_n'$,
+\begin{equation}
+\alpha_n=\Pr\{X_n=X_n'\}.
+\label{eq:si-pair-collision}
+\end{equation}
+Thus $\alpha_n$ is the probability of agreement in one pair, while $\beta_n$ is the probability that three independent samples all agree. The latter quantity enters when two pair comparisons share one sample.
+The order-two R\'enyi entropy is
+\begin{equation}
+H_2(X_n):=-\log\alpha_n,
+\label{eq:si-renyi}
+\end{equation}
+where the natural logarithm is used unless another base is stated \cite{renyi1961}.
+
+\begin{lemma}[Largest atoms and power sums]
+\label{lem:si-power-bounds}
+Every discrete probability law satisfies
+\begin{equation}
+(p_n^{\max})^2\le\alpha_n\le p_n^{\max},
+\qquad
+\alpha_n^2\le\beta_n\le\alpha_n^{3/2}.
+\label{eq:si-power-bounds}
+\end{equation}
+Consequently, $\alpha_n\to0$ if and only if $p_n^{\max}\to0$.
+\end{lemma}
+
+\begin{proof}
+For every $v$, $p_v^2\le\alpha_n$; taking the supremum gives the first lower bound. Also
+\[
+\alpha_n=\sum_v p_v^2
+\le p_n^{\max}\sum_vp_v=p_n^{\max}.
+\]
+For the cubic power sum, let $Z_n=p_{X_n}$. Then
+$\mathbb E Z_n=\alpha_n$ and $\mathbb E Z_n^2=\beta_n$, so nonnegativity of $\operatorname{Var}(Z_n)$ gives $\beta_n\ge\alpha_n^2$. Finally, monotonicity of $\ell^q$ norms gives
+\[
+\beta_n^{1/3}=\|p\|_3\le\|p\|_2=\alpha_n^{1/2}.
+\]
+The equivalence follows from the first pair of bounds.
+\end{proof}
+
+\subsection{Collision mean and variance}
+Let $X_n^{(1)},\ldots,X_n^{(M)}$ be independent copies of $X_n$ and define
+\begin{equation}
+C_M:=\sum_{1\le i<j\le M}
+\mathbf 1_{\{X_n^{(i)}=X_n^{(j)}\}}.
+\label{eq:si-collision-count}
+\end{equation}
+The variable $C_M$ counts colliding unordered pairs. A bucket is the set of sampled objects having one specified value. A bucket with $k$ objects contributes $\binom k2$ to $C_M$. Thus nonsingleton buckets, objects in those buckets, repeated values, and colliding pairs are different statistics.
+
+The mean locates the transition scale. A high-probability assertion above that scale requires a second-moment estimate. The cubic mass $\beta_n$ appears because two collision indicators can share one database entry.
+
+\begin{theorem}[Independent collision formulas]
+\label{thm:si-collision-calculus}
+For every $M\ge2$,
+\begin{align}
+\mathbb E C_M
+&=\binom M2\alpha_n,
+\label{eq:si-collision-mean}\\
+\operatorname{Var}(C_M)
+&=\binom M2(\alpha_n-\alpha_n^2)
++6\binom M3(\beta_n-\alpha_n^2).
+\label{eq:si-collision-variance}
+\end{align}
+Moreover,
+\begin{equation}
+\frac{\operatorname{Var}(C_M)}
+     {(\mathbb E C_M)^2}
+\le
+\frac{4}{M^2\alpha_n}
++\frac{4}{M\sqrt{\alpha_n}}.
+\label{eq:si-relative-variance}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Write
+\[
+I_{ij}:=\mathbf 1_{\{X_n^{(i)}=X_n^{(j)}\}}.
+\]
+Each indicator has mean $\alpha_n$, proving~\eqref{eq:si-collision-mean}. If the index pairs $\{i,j\}$ and $\{k,\ell\}$ are disjoint, then $I_{ij}$ and $I_{k\ell}$ are independent. If two distinct index pairs share one index, for example $\{i,j\}$ and $\{i,k\}$, then
+\[
+\mathbb E(I_{ij}I_{ik})
+=\Pr\{X_n^{(i)}=X_n^{(j)}=X_n^{(k)}\}
+=\beta_n.
+\]
+Every triple of sample indices contains three unordered pairs of index pairs sharing one index. Hence there are $3\binom M3$ unordered overlapping pairs, and the covariance terms occur twice in the variance expansion. This proves~\eqref{eq:si-collision-variance}.
+
+By Lemma~\ref{lem:si-power-bounds}, $\beta_n\le\alpha_n^{3/2}$. Discarding the nonpositive terms in~\eqref{eq:si-collision-variance} and dividing by $\binom M2^2\alpha_n^2$ yields
+\[
+\frac{\operatorname{Var}(C_M)}
+     {(\mathbb E C_M)^2}
+\le
+\frac{1}{\binom M2\alpha_n}
++
+\frac{6\binom M3}{\binom M2^2\sqrt{\alpha_n}}.
+\]
+For $M\ge2$,
+\[
+\binom M2\ge\frac{M^2}{4},
+\qquad
+\frac{6\binom M3}{\binom M2^2}
+=\frac{4(M-2)}{M(M-1)}\le\frac4M,
+\]
+which gives~\eqref{eq:si-relative-variance}.
+\end{proof}
+
+\subsection{The distribution-free zero-one law}
+Here a triangular array means only that the distribution may change with $n$, while the $M_n$ samples at each fixed level are iid. Since a database of size $M_n$ has order $M_n^2$ pairs, the product $M_n^2\alpha_n$ compares the number of opportunities for a collision with the rarity of one pairwise agreement.
+\begin{theorem}[Universal independent birthday law]
+\label{thm:si-zero-one}
+For any triangular array of discrete probability laws and any integer sequence $M_n\ge2$, let $C_{M_n}$ denote the collision count formed from $M_n$ iid samples from the $n$th law.  Then:
+\begin{enumerate}[label=(\roman*)]
+\item If $M_n^2\alpha_n\to0$, then
+\[
+\Pr\{C_{M_n}>0\}\to0.
+\]
+\item If $M_n^2\alpha_n\to\infty$, then
+\[
+\frac{C_{M_n}}{\binom{M_n}{2}\alpha_n}
+\longrightarrow1
+\quad\text{in probability},
+\]
+and therefore
+\[
+\Pr\{C_{M_n}>0\}\to1.
+\]
+\end{enumerate}
+No condition on the largest atom or on higher power sums is required in these two off-critical regimes.
+\end{theorem}
+
+\begin{proof}
+For part (i), Markov's inequality and~\eqref{eq:si-collision-mean} give
+\[
+\Pr\{C_{M_n}>0\}
+\le\mathbb E C_{M_n}
+=\binom{M_n}{2}\alpha_n\to0.
+\]
+For part (ii), $M_n\sqrt{\alpha_n}=\sqrt{M_n^2\alpha_n}\to\infty$, so the right-hand side of~\eqref{eq:si-relative-variance} tends to zero. Chebyshev's inequality therefore gives
+\[
+\frac{C_{M_n}}{\mathbb E C_{M_n}}
+\longrightarrow1
+\quad\text{in probability}.
+\]
+The mean tends to infinity. In particular,
+\begin{align*}
+\Pr\{C_{M_n}=0\}
+&\le
+\Pr\{|C_{M_n}-\mathbb E C_{M_n}|
+       \ge\mathbb E C_{M_n}\}\\
+&\le
+\frac{\operatorname{Var}(C_{M_n})}
+     {(\mathbb E C_{M_n})^2}
+\longrightarrow0.
+\end{align*}
+\end{proof}
+
+\begin{corollary}[Inverse birthday phenomenon]
+\label{cor:si-inverse-birthday}
+Assume $\alpha_n\to0$. Then one independent pair has different values with probability $1-\alpha_n\to1$. Every database sequence satisfying $M_n^2\alpha_n\to\infty$ contains a colliding pair with probability tending to one. The scale is
+\begin{equation}
+M_{\mathrm B}(n):=\alpha_n^{-1/2}
+=\exp\!\left(\frac{H_2(X_n)}{2}\right).
+\label{eq:si-birthday-scale}
+\end{equation}
+More precisely,
+\[
+M_n=o(M_{\mathrm B}(n))
+\Longrightarrow
+\Pr\{C_{M_n}>0\}\to0,
+\]
+whereas
+\[
+M_n/M_{\mathrm B}(n)\to\infty
+\Longrightarrow
+\Pr\{C_{M_n}>0\}\to1.
+\]
+Finite-$n$ medians and the limiting law in the critical window require further information.
+\end{corollary}
+
+\subsection{A Poisson limit in the critical window}
+The zero-one law leaves open the regime $M_n^2\alpha_n=\Theta(1)$, equivalently $M_n\asymp\alpha_n^{-1/2}$. Here the expected number of collisions remains of constant order. Classical Poisson approximation results treat sparse dependent counts \cite{arratiagoldsteingordon1989,barbourholstjanson1992}. In this window, the condition $M_n^3\beta_n\to0$ excludes clustering at heavier atoms and yields the Poisson limit below.
+
+\begin{theorem}[Poisson window under diffuseness]
+\label{thm:si-poisson-window}
+Suppose
+\begin{equation}
+M_n^2\alpha_n\longrightarrow\lambda\in(0,\infty),
+\qquad
+M_n^3\beta_n\longrightarrow0.
+\label{eq:si-poisson-hypotheses}
+\end{equation}
+Then
+\begin{equation}
+C_{M_n}\Longrightarrow
+\operatorname{Poisson}(\lambda/2),
+\label{eq:si-poisson-limit}
+\end{equation}
+and consequently
+\[
+\Pr\{C_{M_n}>0\}
+\longrightarrow1-e^{-\lambda/2}.
+\]
+\end{theorem}
+
+\begin{proof}
+Write $M=M_n$, let $(x)_r=x(x-1)\cdots(x-r+1)$, and set
+\[
+s_k:=\sum_vp_v^k.
+\]
+The assumptions and $\beta_n\ge\alpha_n^2$ imply $M_n\to\infty$. Fix $r\ge1$ and expand the falling factorial $(C_M)_r$ over ordered $r$-tuples of distinct edges of the complete graph on the database indices.
+
+For one edge tuple, let $G$ be the simple graph formed by those edges after unused vertices are deleted. If the connected-component sizes of $G$ are $k_1,\ldots,k_c$, then the probability of the corresponding equality event is
+\begin{equation}
+\prod_{j=1}^c s_{k_j},
+\label{eq:si-component-probability}
+\end{equation}
+because all sample values agree within each connected component and distinct components impose independent conditions.
+
+If every component has two vertices, $G$ is an $r$-edge matching. The number of ordered matchings is $(M)_{2r}/2^r$, so their contribution to the factorial moment is
+\[
+\frac{(M)_{2r}}{2^r}\alpha_n^r
+\longrightarrow
+\left(\frac\lambda2\right)^r.
+\]
+Every nonmatching graph type has a component of size at least three. For $k\ge3$, monotonicity of $\ell^q$ norms gives
+\begin{equation}
+s_k\le\beta_n^{k/3}.
+\label{eq:si-higher-power-bound}
+\end{equation}
+Suppose a fixed graph type has $t$ two-vertex components and remaining component sizes $k_1,\ldots,k_u\ge3$. Up to a constant depending only on $r$, the total contribution of all labeled embeddings of that type is at most
+\[
+(M^2\alpha_n)^t
+\prod_{j=1}^u(M^3\beta_n)^{k_j/3},
+\]
+which tends to zero by~\eqref{eq:si-poisson-hypotheses}. Only finitely many graph types occur for fixed $r$. Hence
+\[
+\mathbb E(C_{M_n})_r
+\longrightarrow
+(\lambda/2)^r
+\]
+for every fixed $r$. These are the factorial moments of
+$\operatorname{Poisson}(\lambda/2)$, and the factorial-moment criterion for nonnegative integer-valued variables proves~\eqref{eq:si-poisson-limit}.
+\end{proof}
+
+\subsection{A non-Poisson critical-window example}
+\begin{proposition}[A moving heavy atom gives a non-Poisson limit]
+\label{prop:si-heavy-atom}
+The condition $M_n^2\alpha_n\to\lambda$ alone does not imply a Poisson limit for $C_{M_n}$.
+\end{proposition}
+
+\begin{proof}
+Fix $c>0$ and take $M_n=n$. Give one distinguished value probability $c/n$ and distribute the remaining mass uniformly over $N_n=n^4$ additional values. Then
+\[
+\alpha_n=\frac{c^2}{n^2}+O(n^{-4}),
+\qquad
+\beta_n=\frac{c^3}{n^3}+O(n^{-8}),
+\]
+so
+\[
+n^2\alpha_n\to c^2,
+\qquad
+n^3\beta_n\to c^3.
+\]
+Let $Z_n$ be the number of sampled copies of the distinguished value. Then
+$Z_n\sim\operatorname{Bin}(n,c/n)$ and
+$Z_n\Longrightarrow Z\sim\operatorname{Poisson}(c)$. The expected number of collisions among the diffuse values is
+\[
+O\!\left(\frac{n^2}{N_n}\right)=o(1),
+\]
+so those collisions vanish in probability. Therefore
+\begin{equation}
+C_{M_n}\Longrightarrow\binom Z2.
+\label{eq:si-heavy-limit}
+\end{equation}
+This limit is not $\operatorname{Poisson}(c^2/2)$: for example, $\binom Z2$ never equals $2$, whereas a Poisson variable of positive mean assigns positive probability to $2$.
+\end{proof}
+
+\begin{remark}[Collision clustering]
+For $\alpha_n>0$, define
+\begin{equation}
+\kappa_n:=\frac{\beta_n}{\alpha_n^{3/2}}.
+\label{eq:si-kappa}
+\end{equation}
+Lemma~\ref{lem:si-power-bounds} gives
+$\sqrt{\alpha_n}\le\kappa_n\le1$. In a critical window with
+$M_n^2\alpha_n\to\lambda\in(0,\infty)$,
+\[
+M_n^3\beta_n
+=(M_n^2\alpha_n)^{3/2}\kappa_n.
+\]
+Thus the diffuseness hypothesis of Theorem~\ref{thm:si-poisson-window} is equivalent to $\kappa_n\to0$ in that window. The quantity $\alpha_n$ determines the birthday scale, while the ratio above measures clustering near the critical window.
+\end{remark}
+
+The preceding results reduce the knot application to a uniform bound on the largest atom of a suitable invariant. The next section obtains such bounds from many independent local contributions. Its general lattice estimate includes the one-dimensional Bernoulli sum produced by trefoil slots.
+% END INLINED FILE: si/sections/S2_collision_calculus.tex
+% BEGIN INLINED FILE: si/sections/S3_local_block.tex
+\section{General local-block anti-concentration}
+\label{sec:si-local-block}
+The preceding collision calculation reduces the knot application to bounding the largest fingerprint atom, since $\alpha_n\le p_n^{\max}$. In Section~S4, a trefoil slot is a three-crossing region whose unexposed signs select either a trefoil or an unknot factor. Revealing the diagram outside linearly many such slots leaves conditionally independent choices, each contributing a Bernoulli variable of parameter $1/4$ to the $3$-adic valuation of the determinant. Their sum has maximal point probability of order $n^{-1/2}$.
+
+The estimate below records the corresponding fact for finite-support lattice variables in any dimension. It applies when, after conditioning on the revealed environment, a fingerprint coordinate is the sum of linearly many independent terms.
+
+\subsection{Finite-support lattice smoothing}
+Let $\mu$ be a probability law with finite support $A\subset\mathbb Z^r$. Its difference lattice is
+\[
+ L_\mu:=\operatorname{span}_{\mathbb Z}\{a-b:a,b\in A\}\subseteq\mathbb Z^r.
+\]
+The support has full affine span when $L_\mu$ has rank $r$.
+
+\begin{lemma}[Finite-support lattice smoothing]
+\label{lem:lattice-smoothing}
+Let $X^{(1)},X^{(2)},\ldots$ be independent $\mathbb Z^r$-valued random variables with a common finite-support law $\mu$ of full affine span. For $S_m=X^{(1)}+\cdots+X^{(m)}$, there is a constant $C_\mu<\infty$ such that
+\[
+ \sup_{z\in\mathbb Z^r}\Pr\{S_m=z\}\le C_\mu m^{-r/2}
+ \qquad(m\ge1).
+\]
+The bound is uniform over targets $z=z_m$ that may move with $m$.
+\end{lemma}
+
+\begin{proof}
+Let
+\[
+ \phi(t)=\mathbb E e^{i\langle t,X^{(1)}\rangle},
+ \qquad t\in[-\pi,\pi]^r.
+\]
+Fourier inversion gives
+\begin{equation}
+ \Pr\{S_m=z\}
+ =\frac1{(2\pi)^r}\int_{[-\pi,\pi]^r}
+ e^{-i\langle t,z\rangle}\phi(t)^m\,dt,
+ \label{eq:fourier-lattice}
+\end{equation}
+and therefore the target-independent upper bound
+\[
+ \Pr\{S_m=z\}\le\frac1{(2\pi)^r}
+ \int_{[-\pi,\pi]^r}\lvert\phi(t)\rvert^m\,dt.
+\]
+
+Equality $\lvert\phi(t)\rvert=1$ holds precisely when the phases $e^{i\langle t,a\rangle}$ are constant over $a\in A$, equivalently when
+\[
+ \langle t,\ell\rangle\in2\pi\mathbb Z
+ \quad\text{for every }\ell\in L_\mu.
+\]
+Because $L_\mu$ has full rank, this condition defines a finite subgroup $\Gamma_\mu$ of the torus $\mathbb R^r/(2\pi\mathbb Z)^r$.
+
+The covariance matrix $\Sigma$ of $X^{(1)}$ is positive definite: a zero-variance linear functional would be constant on $A$ and would contradict full affine span. Hence, for some $c,\eta>0$,
+\[
+ \lvert\phi(u)\rvert\le e^{-c\lVert u\rVert^2}
+ \qquad\text{when }\lVert u\rVert\le\eta.
+\]
+For every $\gamma\in\Gamma_\mu$, the common-phase property implies
+$\lvert\phi(\gamma+u)\rvert=\lvert\phi(u)\rvert$. Choose disjoint $\eta$-neighborhoods of the finitely many points of $\Gamma_\mu$. On their complement, continuity gives $\lvert\phi(t)\rvert\le q<1$. Consequently,
+\[
+ \int_{[-\pi,\pi]^r}\lvert\phi(t)\rvert^m\,dt
+ \le
+ \lvert\Gamma_\mu\rvert
+ \int_{\mathbb R^r}e^{-cm\lVert u\rVert^2}\,du
+ +(2\pi)^rq^m
+ \le C m^{-r/2}.
+\]
+Combining this estimate with \eqref{eq:fourier-lattice} proves the claim.
+\end{proof}
+
+\begin{proposition}[Sharpness of the exponent]
+\label{prop:lattice-sharpness}
+Fix positive probabilities $q_0,q_1,\ldots,q_r$ summing to one, and let $\mu$ be supported on
+\[
+ \{0,e_1,\ldots,e_r\}\subset\mathbb Z^r
+\]
+with these probabilities. Then
+\[
+ \sup_z\Pr\{S_m=z\}=\Theta(m^{-r/2}).
+\]
+\end{proposition}
+
+\begin{proof}
+Lemma~\ref{lem:lattice-smoothing} gives the upper bound. Choose integers $n_i=mq_i+O(1)$ with $\sum_{i=0}^rn_i=m$. The point $z=(n_1,\ldots,n_r)$ is reached exactly when the categorical counts are $n_0,\ldots,n_r$, so
+\[
+ \Pr\{S_m=z\}
+ =\frac{m!}{n_0!\cdots n_r!}\prod_{i=0}^rq_i^{n_i}.
+\]
+Stirling's formula gives a positive constant times $m^{-r/2}$, proving the matching lower bound.
+\end{proof}
+
+\subsection{Conditional anti-concentration}
+The conditional theorem separates the revealed data from the unrevealed local choices. Here $F_n$ is the full fingerprint, $\mathcal E_n$ records the environment, and $\mathcal G_n$ is the event on which sufficiently many blocks are available. The number of blocks is $m_n$, their independent contributions are $X_n^{(j)}$, and $A_n$ contains the contribution already fixed by the environment. The map $g_n$ selects the lattice coordinate to which the smoothing lemma is applied. Since that lemma takes a supremum over its target, the final estimate is uniform even when the most likely fingerprint value changes with $n$.
+
+\begin{theorem}[Conditional local-block anti-concentration]
+\label{thm:conditional-local-block}
+For each $n$, let $F_n$ be a discrete fingerprint with value set $\mathcal V_n$, let $\mathcal E_n$ be an environment sigma-field, and let $\mathcal G_n\in\mathcal E_n$ satisfy
+\[
+ \Pr(\mathcal G_n^c)\le\varepsilon_n.
+\]
+Assume that there are:
+\begin{enumerate}[label=(\roman*)]
+\item a nonnegative $\mathcal E_n$-measurable integer $m_n$ such that $m_n\ge\delta n$ on $\mathcal G_n$;
+\item a random finite vector $\mathbf X_n=(X_n^{(1)},\ldots,X_n^{(m_n)})$, defined on the whole probability space, whose conditional law given $\mathcal E_n$ is $\mu^{\otimes m_n}$ almost surely on $\mathcal G_n$, where $\mu$ is one fixed finite-support law on $\mathbb Z^r$ of full affine span;
+\item an $\mathcal E_n$-measurable remainder $A_n\in\mathbb Z^r$; and
+\item a deterministic map $g_n:\mathcal V_n\to\mathbb Z^r$ such that, on $\mathcal G_n$,
+\[
+ g_n(F_n)=A_n+\sum_{j=1}^{m_n}X_n^{(j)}.
+\]
+\end{enumerate}
+Then, for a constant $C$ depending only on $\mu$ and $\delta$,
+\[
+ \sup_{v\in\mathcal V_n}\Pr\{F_n=v\}
+ \le\varepsilon_n+Cn^{-r/2}.
+\]
+The estimate is uniform over moving fingerprint values $v=v_n$.
+\end{theorem}
+
+\begin{proof}
+Fix $v\in\mathcal V_n$. Since $\mathcal G_n\in\mathcal E_n$,
+\[
+ \Pr\{F_n=v,\mathcal G_n\}
+ =\mathbb E\!\left[\mathbf 1_{\mathcal G_n}\Pr\{F_n=v\mid\mathcal E_n\}\right].
+\]
+On $\mathcal G_n$, the event $\{F_n=v\}$ is contained in
+\[
+ \left\{\sum_{j=1}^{m_n}X_n^{(j)}=g_n(v)-A_n\right\}.
+\]
+Because $m_n$ and $A_n$ are $\mathcal E_n$-measurable, the conditional product law and Lemma~\ref{lem:lattice-smoothing} give
+\[
+ \mathbf 1_{\mathcal G_n}\Pr\{F_n=v\mid\mathcal E_n\}
+ \le
+ \mathbf 1_{\mathcal G_n}C_\mu m_n^{-r/2}
+ \le C_\mu\delta^{-r/2}n^{-r/2}.
+\]
+Taking expectations and adding $\Pr(\mathcal G_n^c)$ proves the result.
+\end{proof}
+
+\begin{remark}
+No independence is required between $A_n$ and the number or positions of the blocks. The blocks are selected before their internal random variables are exposed. For the trefoil argument, $r=1$, $X_n^{(j)}\sim\operatorname{Bernoulli}(1/4)$, and $g_n=v_3\circ\det$.  There $m_n=s_n=\lfloor\delta n\rfloor$, so hypothesis (i) holds with density constant $\delta/2$ for all sufficiently large $n$.
+\end{remark}
+% END INLINED FILE: si/sections/S3_local_block.tex
+% BEGIN INLINED FILE: si/sections/S4_random_diagrams.tex
+\section{Random diagrams, trefoil slots, and determinant anti-concentration}
+\label{sec:si-random-diagrams}
+For either rooted Chapman ensemble, the maximal determinant atom is $O(n^{-1/2})$. We prove this by exhibiting a conditional binomial coordinate in $v_3(\det K(D_n))$. Chapman's pattern theorem first gives linearly many disjoint opened-trefoil shapes outside an exponentially small exceptional set \cite{chapman2017}. These shapes are selected from the shadow, before their crossing signs are exposed. They can therefore be thinned to linearly many well-separated slots without changing the independent fair law of their internal signs.
+
+The topological step places the selected slots in pairwise disjoint balls that remain valid under every simultaneous choice of the unexposed signs. Each slot then contributes a connected-sum factor. Of its eight equally likely sign triples, two close to a trefoil and six to the unknot. The trefoil count is therefore conditionally binomial with parameter $1/4$ and, added to $v_3(\det K_n^{\mathrm{ext}})$, gives $v_3(\det K(D_n))$. The largest atom of this binomial variable gives the required bound.
+
+
+\subsection{The opened-trefoil pattern}
+Let $Q$ be the two-leg shadow obtained by cutting one closure edge of the standard three-crossing two-braid shadow. We retain the tangle disk, a marked tail, and the ordered joining sides, so an occurrence includes the data needed by Chapman's edge-replacement construction. Label the three crossing vertices $v_1,v_2,v_3$ from tail to head.
+
+% BEGIN INLINED FILE: figures/fig_opened_trefoil_shadow.tex
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.62\linewidth]{figure1_opened_trefoil_shadow.pdf}
+\caption{The opened three-crossing trefoil shadow $Q$. Closing its two exterior legs restores the doubled triangle, the standard shadow of the closure of the two-braid $\sigma_1^3$. The structured pattern retains the tangle disk, the marked tail, and the two joining sides.}
+\label{fig:opened-trefoil-shadow}
+\end{figure}
+% END INLINED FILE: figures/fig_opened_trefoil_shadow.tex
+
+\begin{lemma}[Admissibility of the opened trefoil]
+\label{lem:Q-admissible}
+The structured shadow $Q$ has one open strand and no closed strand, is prime and two-leg-prime, is reduced, and admits an asymmetric decoration. Hence it satisfies the local hypotheses for Chapman's viable connect-sum attachment, pattern theorem, and reduced diagram class.
+\end{lemma}
+
+\begin{proof}
+Following straight-ahead continuation from the tail passes through all three crossing vertices and exits at the head; every crossing dart belongs to this open strand, so there is no closed component. Closing the two legs produces the doubled triangle. This multigraph remains connected after deletion of any two edges, so $Q$ is prime in Chapman's graph-theoretic sense. In particular, deleting the cut closure edge and any one additional edge leaves it connected, which verifies two-leg-primality. In the doubled-triangle rooted closure, deleting any crossing vertex leaves the other two joined by two parallel edges. Hence the rooted closure is reduced; equivalently, the opened tangle has no disconnecting internal crossing vertex.
+
+An orientation-preserving automorphism fixing both exterior legs fixes the connected rooted tangle dart by dart and is the identity. Any remaining automorphism must exchange the legs and therefore exchange $v_1$ with $v_3$. Decorate $v_1$ negatively and $v_2,v_3$ positively. This decoration is not preserved by the exchange, so it is asymmetric. Denote the resulting fixed decorated tangle by $P$. Graph-theoretic primeness is used in Chapman's Proposition 10, two-leg-primality and asymmetry in the viable attachment of Proposition 3, and reducedness in the reduced diagram class. The fixed signs of $P$ are used to invoke Chapman's theorem and are forgotten before the crossings are randomly redecorated.
+\end{proof}
+
+\subsection{Chapman's pattern theorem}
+For a decorated diagram $D$, let $\nu_P(D)$ be the maximum number of pairwise vertex-disjoint structured occurrences of $P$ as connect-summand tangles. Chapman's Proposition 3 verifies viable edge replacement for the two-leg-prime asymmetric tangle $P$; Theorems 6 and 9 provide the required smooth-growth pattern theorem, and Proposition 10 applies it to this prime tangle in the rooted general and rooted reduced diagram classes \cite{chapman2017}.  Taking the smaller abundance constant and the larger exceptional-rate constant for the two classes gives common $c>0$ and $d\in(0,1)$ such that, for either class and all sufficiently large $n$,
+\begin{equation}
+ \Pr\{\nu_P(D_n)<cn\}\le d^n.
+ \label{eq:chapman-pattern-input}
+\end{equation}
+The occurrences counted by the viable attachment are pairwise vertex-disjoint.
+
+% BEGIN INLINED FILE: figures/fig_random_shadow_atlas.tex
+\begin{figure}[t]
+\centering
+% External asset edit required: enlarge ordinary lettering to at least 6 pt
+% at the included size (smallest reported labels: about 4.46 pt).
+\includegraphics[width=\linewidth]{figure3_random_shadow_atlas.pdf}
+\caption{Finite shadow examples. (A) A constructed one-component shadow with $17$ transverse crossings. (B) Ten rooted one-component $20$-crossing shadows from a deterministic PlanarMap search conditioned on the presence of a full structured opened-trefoil slot. Of $454$ uniform quartic-map proposals, $82$ were one-component; every displayed shadow has exactly one such slot, marked by a dashed orange circle. The planar isotopies place the slots in the standard opened-trefoil position while preserving incidence and straight-ahead continuation. Blue dots mark degree-four shadow vertices, and neither panel assigns over--under information. These conditioned examples illustrate the local pattern; Chapman's theorem supplies the asymptotic statement \cite{chapman2017}.}
+\label{fig:random-shadow-atlas}
+\end{figure}
+% END INLINED FILE: figures/fig_random_shadow_atlas.tex
+
+\subsection{Passing from diagrams to shadows}
+For a rooted shadow $S$, let $\nu_Q(S)$ be the maximum number of pairwise vertex-disjoint structured Chapman occurrences of $Q$: contained tangles in the sense of \cite{chapman2017}, with the pattern-side designation, tangle disk, marked tail, and ordered joining sides retained. If $\pi D=S$, every structured $P$-occurrence in $D$ becomes an occurrence of this class in $S$, so
+\[
+ \nu_P(D)\le\nu_Q(\pi D).
+\]
+
+\begin{lemma}[Decorated-to-shadow transfer]
+\label{lem:shadow-transfer}
+With $c$ and $d$ as in \eqref{eq:chapman-pattern-input}, for every fixed $\eta\in(0,c)$ and all sufficiently large $n$,
+\[
+ \Pr\{\nu_Q(S_n)<\eta n\}\le d^n,
+\]
+where $S_n=\pi(D_n)$ is the uniform rooted shadow obtained from either the rooted general or the rooted reduced diagram class.
+\end{lemma}
+
+\begin{proof}
+Let
+\[
+ A_n=\{S\in\mathcal S_n^{\star}:\nu_Q(S)<\eta n\}.
+\]
+If $S\in A_n$, then every decorated lift $D$ of $S$ satisfies $\nu_P(D)\le\nu_Q(S)<cn$. Hence
+\[
+ \pi^{-1}(A_n)\subseteq\{D:\nu_P(D)<cn\}.
+\]
+By \eqref{eq:shadow-sign-product}, all shadows have the same number $2^n$ of lifts, so the projection of the uniform diagram law is the uniform shadow law. Therefore
+\[
+ \Pr\{S_n\in A_n\}
+ =\Pr\{D_n\in\pi^{-1}(A_n)\}
+ \le\Pr\{\nu_P(D_n)<cn\}
+ \le d^n.
+\]
+\end{proof}
+
+\subsection{Choosing well-separated occurrences}
+All occurrences considered below are structured Chapman occurrences in the preceding sense. Each is encoded by finitely many darts in the rooted planar map. Order all such encodings lexicographically. Among all maximum vertex-disjoint $Q$-families, choose the lexicographically first. This choice is a deterministic function of the shadow.
+
+For two occurrences, define their distance to be the graph distance between their vertex sets in the four-valent shadow. Starting with the chosen maximum family, scan its members in lexicographic order. Retain the first remaining occurrence and delete every other occurrence at distance at most two. Repeat until no occurrence remains. Fix $\eta\in(0,c)$ and set $\mathcal G_n=\{\nu_Q(S_n)\ge\eta n\}$.
+
+\begin{lemma}[Shadow-measurable distance-three selection]
+\label{lem:shadow-selection}
+There are constants $\delta>0$, $C_0<\infty$, and $c_0>0$, and a deterministic shadow-measurable rule such that, outside an event of probability at most $C_0e^{-c_0n}$, the rule selects exactly
+\[
+ s_n=\lfloor\delta n\rfloor
+\]
+structured $Q$-slots whose vertex sets have pairwise graph distance at least three.
+\end{lemma}
+
+\begin{proof}
+For a retained occurrence $H$, let $N_2(V(H))$ be the closed radius-two neighborhood of its three internal vertices. A nonbacktracking exploration in the four-valent multigraph gives
+\[
+ \lvert N_2(V(H))\rvert\le 3+3\cdot4+3\cdot4\cdot3=51;
+\]
+loops, parallel edges, and repeated vertices only lower this count. Charge each occurrence deleted with $H$, and $H$ itself, to $H$. Every charged occurrence meets $N_2(V(H))$, and vertex-disjointness of the starting family makes chosen meeting vertices distinct. Thus at most $51$ starting occurrences are charged to $H$, and the thinning retains at least $\nu_Q(S_n)/51$ occurrences.
+
+Choose $\delta\in(0,\eta/51)$. On $\mathcal G_n$ the first $s_n=\lfloor\delta n\rfloor$ retained occurrences exist and have pairwise distance at least three. Taking these when they exist, and the entire retained family otherwise, defines a deterministic shadow-measurable rule. Lemma~\ref{lem:shadow-transfer} gives $\Pr(\mathcal G_n^c)\le d^n$ for all sufficiently large $n$; take $c_0=-\log d$ and enlarge $C_0$ to absorb the finitely many remaining values of $n$.
+\end{proof}
+
+\begin{remark}[Order of exposure]
+\label{rem:order-of-exposure}
+The selection in Lemma~\ref{lem:shadow-selection} is made from $S_n$ alone. Conditional on $S_n$ and on all crossing signs outside the selected slots, the $3s_n$ internal signs are therefore still independent fair signs. Their conditional law remains a product law because the slots are chosen before any of these signs is exposed.
+\end{remark}
+
+
+\subsection{Trefoil decorations and simultaneous factorization}
+On $\mathcal G_n$, the selected slots are determined by the shadow. The separating disks constructed below depend only on that shadow, are fixed before any crossing signs in the slots are exposed, and work for every simultaneous internal redecoration. We then identify the local two-braid closures and the resulting factorization for every internal sign vector.
+
+
+\subsection{The two-edge boundary}
+To isolate a slot by a sphere meeting the knot in exactly two points, its two boundary incidences must lie on distinct ambient edges. Chapman's general submap definition allows a boundary walk to traverse an edge more than once, so boundary length two alone does not provide this fact. For the opened-trefoil pattern, the valence count at the three internal crossings proves that the two joining edges are distinct.
+
+\begin{lemma}[Boundary of an opened-trefoil occurrence]
+\label{lem:genuine-two-edge}
+Let $H$ be a structured Chapman occurrence of the opened-trefoil shadow $Q$ in a connected four-valent shadow $S$ with more than three vertices. Write $V(H)$ for its three internal crossing vertices, let $H_{\mathrm{int}}$ be the image of the five internal edges of $Q$, and let $e_H^-$ and $e_H^+$ be the joining edges determined by the marked tail and the ordered joining sides. Then
+\[
+ S[V(H)]=H_{\mathrm{int}},
+ \qquad
+ \delta_S(V(H))=\{e_H^-,e_H^+\}.
+\]
+The two joining edges are distinct and each has exactly one endpoint in $V(H)$. There are no other edges of $S$ between vertices of $V(H)$ and no other edges leaving $V(H)$. The structured occurrence also transports the cyclic orders, hence the straight-ahead pairing and the unique open strand of $Q$, together with its tangle disk and pattern side. In particular, the marked exterior face of $Q^*$ is bounded by two distinct dual edges.
+\end{lemma}
+
+\begin{proof}
+The internal multigraph of $Q$ has two edges from $v_1$ to $v_2$, two from $v_2$ to $v_3$, and one from $v_3$ to $v_1$. Its five internal edges therefore use ten darts at the three internal crossings. The tail leg at $v_1$ and the head leg at $v_3$ use the remaining two darts. Altogether the structured tangle accounts for
+\[
+ 2\lvert E_{\mathrm{int}}(Q)\rvert+2=2\cdot5+2=12
+\]
+incident darts.
+
+Since $S$ is four-valent and $\lvert V(H)\rvert=3$,
+\[
+ \sum_{v\in V(H)}\deg_S(v)=12.
+\]
+The five transported internal edges exhaust ten of these ambient darts, so exactly two darts incident with $V(H)$ remain: the transported tail and head legs. These two darts cannot be paired to each other. If they were, every edge incident with $V(H)$ would have both endpoints in $V(H)$; because $H_{\mathrm{int}}$ is connected, $V(H)$ would then be the vertex set of a connected component of $S$, contrary to the connectedness of $S$ and $\lvert V(S)\rvert>3$. Thus each leg dart is paired with a dart outside $V(H)$. Edge pairings are disjoint, so the resulting joining edges $e_H^-$ and $e_H^+$ are distinct. The count now proves
+\[
+ S[V(H)]=H_{\mathrm{int}},
+ \qquad
+ \delta_S(V(H))=\{e_H^-,e_H^+\}.
+\]
+
+Finally, an isomorphism of oriented plane maps preserves the cyclic order of the four darts at each crossing. Opposite darts in that cyclic order are the straight-ahead mates, so the straight-ahead transition system on $H$ is the one on $Q$. Lemma~\ref{lem:Q-admissible} identifies it as a single interval from the marked tail to the marked head, with no closed strand. The retained tangle disk determines the pattern side, and the marked tail and ordered joining sides retain the remaining structured data. The two distinct joining edges dualize to the two distinct boundary edges of the marked exterior $2$-gon of $Q^*$.
+\end{proof}
+
+\begin{corollary}[Separation of the joining edges]
+\label{cor:distance-three-buffer}
+On $\mathcal G_n$, let $V_j$ be the internal vertex set of the $j$th selected slot. If $i\ne j$, no joining edge of the $i$th slot ends in $V_j$, and joining edges from the $i$th and $j$th slots have no common exterior endpoint. Hence cut points may be chosen near their internal endpoints so that the truncated subgraphs are pairwise disjoint; after collapse and suppression of the cut points, the marked residual edges are pairwise vertex-disjoint. The same values of $s_n$, $\delta$, $C_0$, and $c_0$ apply.
+\end{corollary}
+
+\begin{proof}
+The two forbidden incidences would give paths of length one and two between $V_i$ and $V_j$, contradicting Lemma~\ref{lem:shadow-selection}. Lemma~\ref{lem:genuine-two-edge} identifies the joining edges as all edges leaving each selected subgraph. Distinct plane-map edges have disjoint interiors, so short initial joining-edge segments give disjoint truncations. After collapse, a shared endpoint of two marked residual edges would be a shared exterior endpoint of joining edges from the corresponding slots. The selected family is unchanged.
+\end{proof}
+
+\subsection{Disjoint tangle disks for all redecorations}
+Graph-distance separation makes the truncated slot subgraphs disjoint. Connected-sum factorization additionally requires planar disks with disjoint interiors whose boundaries meet the shadow exactly twice. These disks must be chosen before the internal signs are known, so that one family works for every redecoration. The next lemma supplies this separation.
+
+\begin{lemma}[Pairwise disjoint separating disks]
+\label{lem:simultaneous-separators}
+On the good-shadow event $\mathcal G_n$, let $H_1,\ldots,H_{s_n}$ be the selected structured $Q$-slots in the one-component shadow $S=S_n$. Write $V_j=V(H_j)$ and let $e_j^-$ and $e_j^+$ be the joining edges specified by the marked tail and ordered joining sides. There are pairwise disjoint closed disks
+\[
+ \Delta_1,\ldots,\Delta_{s_n}\subset S^2
+\]
+and points $p_j^-\in\operatorname{int}(e_j^-)$ and $p_j^+\in\operatorname{int}(e_j^+)$ with the following properties.
+\begin{enumerate}[label=(\roman*)]
+\item The boundary $\partial\Delta_j$ contains no vertex of $S$ and meets $S$ transversely exactly at $p_j^-$ and $p_j^+$.
+\item Let $u_j^\pm\in V_j$ be the internal endpoint of $e_j^\pm$, and let
+\[
+ T_j=S[V_j]\cup [u_j^-,p_j^-]_{e_j^-}\cup [u_j^+,p_j^+]_{e_j^+}.
+\]
+Then $\Delta_j\cap S=T_j$. Thus $\Delta_j$ contains precisely the selected opened-trefoil subgraph and the indicated initial joining-edge segments.
+\item Replacing every $T_j$ inside $\Delta_j$ by a properly embedded arc from $p_j^-$ to $p_j^+$, and suppressing the resulting bivalent subdivision points, produces a planar one-component residual shadow $S^\circ$. The corresponding marked residual edges $f_1,\ldots,f_{s_n}$ are pairwise vertex-disjoint. Reinserting the retained structured occurrences recovers $S$; abstract copies with the same recorded data reconstruct a shadow orientation-preservingly isomorphic to $S$ by a homeomorphism that is the identity outside $\bigcup_j\Delta_j$.
+\item The disks use only the structured shadow data. Once the shadow is fixed, the same disks and a fixed family of pairwise disjoint $3$-ball thickenings work for every simultaneous redecoration of the selected crossings. Each boundary sphere meets every such decorated knot in exactly two points.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+The assertion is empty when $s_n=0$, so suppose $s_n\ge1$. Lemma~\ref{lem:genuine-two-edge} shows that each selected opened-trefoil subgraph is induced by $V_j$ and that
+\[
+ \delta_S(V_j)=\{e_j^-,e_j^+\}.
+\]
+Lemma~\ref{lem:shadow-selection} gives $\operatorname{dist}_S(V_i,V_j)\ge3$ for $i\ne j$.
+
+\emph{Connectedness of the exterior.}
+Fix $j$, and let $G_j^{\mathrm{out}}$ be the subgraph of $S$ induced by $V(S)\setminus V_j$. We first show that $G_j^{\mathrm{out}}$ is connected. Let $C$ be one of its connected components. Since $S$ is connected, at least one edge joins $C$ to $V_j$. No edge joins $C$ to another component of $G_j^{\mathrm{out}}$, so every edge of $\delta_S(V(C))$ belongs to $\delta_S(V_j)$. All vertices of $S$ have even degree, and hence
+\[
+ \lvert\delta_S(V(C))\rvert
+ \equiv \sum_{v\in V(C)}\deg_S(v)
+ \equiv0\pmod 2.
+\]
+Every component of $G_j^{\mathrm{out}}$ is therefore incident with a positive even number of the two joining edges. There can be only one component.
+
+\emph{Disjoint truncated subgraphs.}
+Write $w_j^\pm\in V(S)\setminus V_j$ for the exterior endpoint of $e_j^\pm$. Choose $p_j^\pm\in\operatorname{int}(e_j^\pm)$ sufficiently close to $u_j^\pm$ and define $T_j$ as in the statement. Corollary~\ref{cor:distance-three-buffer} permits these choices so that the compact sets $T_j$ are pairwise disjoint. Set
+\[
+ X^{(j)}=G_j^{\mathrm{out}}
+ \cup[p_j^-,w_j^-]_{e_j^-}
+ \cup[p_j^+,w_j^+]_{e_j^+}.
+\]
+The two-edge identities give
+\[
+ S=T_j\cup X^{(j)},
+ \qquad
+ T_j\cap X^{(j)}=\{p_j^-,p_j^+\}.
+\]
+The connectedness of $G_j^{\mathrm{out}}$ shows that $X^{(j)}$ and $X^{(j)}\setminus\{p_j^-,p_j^+\}$ are connected.
+
+\emph{Individual disks from ribbon neighborhoods.}
+Choose a closed ribbon neighborhood $N_j$ of $T_j$, cut by small transverse cross-arcs at $p_j^-$ and $p_j^+$, so that
+\[
+ N_j\cap S=T_j,
+ \qquad
+ \partial N_j\cap S=\{p_j^-,p_j^+\}.
+\]
+Because the $T_j$ are pairwise disjoint and finite in number, the neighborhoods $N_j$ may be chosen pairwise disjoint. Each $N_j$ is a connected compact genus-zero subsurface of $S^2$, so every component of $S^2\setminus N_j$ is an open disk. The connected set $X^{(j)}\setminus\{p_j^-,p_j^+\}$ is disjoint from $N_j$ and hence lies in a unique component $U_j$ of $S^2\setminus N_j$. Both cut points lie on $\partial U_j$, since the two exterior edge segments approach them. Define
+\[
+ \Delta_j=S^2\setminus U_j.
+\]
+Since $U_j$ is an open disk, $\Delta_j$ is a closed disk. Its boundary is contained in $\partial N_j$, contains both cut points, and meets the shadow nowhere else. The intersections at the cut points are transverse. Moreover, $T_j\subset\Delta_j$, while every point of $S\setminus T_j$, apart from the two cut points, belongs to $X^{(j)}\setminus\{p_j^-,p_j^+\}\subset U_j$. Thus
+\[
+ \Delta_j\cap S=T_j.
+\]
+
+\emph{Disjointness of the disks.}
+The curves $\partial\Delta_j$ are pairwise disjoint because $\partial\Delta_j\subset\partial N_j$ and the $N_j$ are pairwise disjoint. It remains to rule out incompatible choices of disk side. Choose a point $x$ on the open segment of $e_1^-$ from $p_1^-$ toward $w_1^-$, avoiding all cut points. No other $T_j$ contains an interior point of this edge: otherwise that edge would be internal to, or a joining edge of, another selected occurrence, producing distance at most one between the corresponding internal vertex sets. Hence
+\[
+ x\in X^{(j)}\setminus\{p_j^-,p_j^+\}\subset U_j
+ \qquad\text{for every }j,
+\]
+so $x\notin\Delta_j$ for every $j$.
+
+Identify $S^2\setminus\{x\}$ with $\mathbb R^2$. Each $\Delta_j$ is now the bounded closed Jordan domain determined by $\partial\Delta_j$. Two such domains with disjoint boundaries are disjoint or one lies in the interior of the other. If $\Delta_k\subset\operatorname{int}(\Delta_j)$ for $j\ne k$, then $T_k\subset\Delta_j$. On the other hand, the pairwise disjointness of the truncated subgraphs and the decomposition $S=T_j\cup X^{(j)}$ give
+\[
+ T_k\subset X^{(j)}\setminus\{p_j^-,p_j^+\}\subset U_j=S^2\setminus\Delta_j,
+\]
+a contradiction. Thus the disks are pairwise disjoint.
+
+\emph{The residual shadow.}
+For every $j$, choose a properly embedded arc $\gamma_j\subset\Delta_j$ from $p_j^-$ to $p_j^+$, with interior in $\operatorname{int}(\Delta_j)$ and with endpoint germs compatible with the two joining-edge segments. Remove $T_j\setminus\{p_j^-,p_j^+\}$ and insert $\gamma_j$, for all $j$ simultaneously. Suppressing the bivalent points $p_j^-$ and $p_j^+$ produces a planar four-valent residual shadow $S^\circ$ and a marked residual edge $f_j$ for every collapsed occurrence.
+
+The shadow $S^\circ$ still has one straight-ahead component. Lemma~\ref{lem:genuine-two-edge} identifies the transition system inside $T_j$ as the single interval strand from $p_j^-$ to $p_j^+$, with no closed strand. Replacing this interval by $\gamma_j$ preserves the continuation of the unique global straight-ahead circuit. The disjointness of the disks makes all replacements simultaneous. Corollary~\ref{cor:distance-three-buffer} gives that the marked residual edges are pairwise vertex-disjoint.
+
+Reinserting the retained embedded copies of the $T_j$ reverses the construction and recovers $S$. If the operation is encoded using abstract copies, the marked tail, ordered joining sides, pattern side, and rotation system identify each abstract tangle with the retained one relative to the two cut points. Extending this plane-tangle identification across the complementary disks of $\Delta_j$ and correcting its boundary restriction by an isotopy gives an orientation-preserving homeomorphism of $\Delta_j$ fixed on $\partial\Delta_j$. The disk homeomorphisms therefore glue to the identity outside $\bigcup_j\Delta_j$.
+
+\emph{Ball thickenings independent of the signs.}
+All cut points, ribbon neighborhoods, exterior components, and disks were chosen from the structured shadow before any selected crossing sign was exposed. Fix a product neighborhood $S^2\times[-\epsilon,\epsilon]$. Choose disjoint crossing cylinders at every crossing of $S$, with their projection disks disjoint from every $\partial\Delta_j$. Use the same cylinders and absolute crossing height $h$, with $0<h<\epsilon$, in every realization. Keep the exterior crossing choices fixed and vary only the crossings inside the selected disks. Away from the union of all crossing cylinders, the lifted knot lies in $S^2\times\{0\}$.
+
+For each $j$, take a rounded product thickening of $\Delta_j\times[-\epsilon,\epsilon]$, leaving its side boundary unchanged near $p_j^-$ and $p_j^+$. It is a $3$-ball whose boundary misses the lifted knot on the upper and lower faces and meets it transversely on the side boundary exactly at the two cut points. The planar disks are pairwise disjoint, so the product thickenings may be chosen pairwise disjoint. They are fixed before the signs are chosen and therefore work for every simultaneous internal redecoration.
+\end{proof}
+
+\subsection{The eight local decorations}
+Each selected slot has three unexposed crossing signs and therefore eight equally likely decorations. We enumerate them to determine the local knot factor and to identify the exact Bernoulli variable that enters the determinant.
+
+Work on $\mathcal G_n$, and write $H_1,\ldots,H_{s_n}$ for the selected slots. For each such rooted shadow, choose one family of disks, ball thickenings, and residual arcs given by Lemma~\ref{lem:simultaneous-separators}. At fixed $n$ there are finitely many rooted shadows, so the choice may be made shadow-measurably.
+
+For every $j$, transport the labels $v_{j,1},v_{j,2},v_{j,3}$ and the reference decoration from the standard cut-open $\widehat{\sigma_1^3}$ model. Let $\varepsilon_{n,j,r}=+1$ when the sign at $v_{j,r}$ agrees with the transported reference crossing and let $\varepsilon_{n,j,r}=-1$ when it is switched. Put
+\[
+ \boldsymbol\varepsilon_{n,j}=(\varepsilon_{n,j,1},\varepsilon_{n,j,2},\varepsilon_{n,j,3}),
+ \qquad
+ \boldsymbol\varepsilon=(\boldsymbol\varepsilon_{n,1},\ldots,\boldsymbol\varepsilon_{n,s_n}),
+\]
+and let $\mathcal F_n$ be the sigma-field generated by $S_n$ and all crossing signs outside the selected internal vertex sets. Give $\boldsymbol\varepsilon$ a fixed value on $\mathcal G_n^c$, so that it is defined everywhere. The selected list and $\mathcal G_n$ are shadow-measurable, hence $\mathcal G_n\in\mathcal F_n$. The shadow--sign product law gives
+\begin{equation}
+ \mathcal L(\boldsymbol\varepsilon\mid\mathcal F_n)
+ =\operatorname{Unif}\!\left((\{-1,+1\}^3)^{s_n}\right)
+ \qquad\text{almost surely on }\mathcal G_n.
+ \label{eq:conditional-internal-sign-law}
+\end{equation}
+
+\begin{lemma}[Closure of a decorated opened trefoil]
+\label{lem:two-braid-closure}
+Once a generator $\sigma_1$ of $B_2$ is fixed, there is a sign $\eta_H\in\{-1,+1\}$, determined by the structured shadow embedding and independent of the decoration, such that the recorded closure of the decorated slot is
+\[
+ \widehat{\sigma_1^{\eta_H\varepsilon_1}
+             \sigma_1^{\eta_H\varepsilon_2}
+             \sigma_1^{\eta_H\varepsilon_3}}
+ \cong T\!\left(2,\eta_H(\varepsilon_1+\varepsilon_2+\varepsilon_3)\right).
+\]
+The local connected-sum factor defined by a separator ball from Lemma~\ref{lem:simultaneous-separators} has this isotopy type. Thus the two unanimous triples give the trefoil mirror pair, and every mixed triple gives the unknot.
+\end{lemma}
+
+\begin{proof}
+The retained tangle disk, marked tail, ordered joining sides, and rotation system identify $H$ with the standard three-crossing two-braid shadow cut open along one closure edge. Relative to the chosen generator, the transported reference crossing at all three braid positions is $\sigma_1^{\eta_H}$ for one common sign $\eta_H$; switching a crossing gives its inverse. Since $B_2=\langle\sigma_1\rangle\cong\mathbb Z$, the exponents add, and the standard closure of $\sigma_1^k$ is $T(2,k)$.
+
+A separator ball contains exactly the structured one-strand tangle and meets the knot at its two joining points. The structured identification extends across the two joining-edge collars to the cut points. Under this identification, the missing closure edge of the standard model is represented by a boundary-parallel cap in the complementary ball used to close the local tangle. Any two such caps are ambient isotopic relative to their endpoints, so this cap computes the factor defined by the separating sphere. The resulting local knot is the displayed braid closure. Its exponent is $\pm3$ for a unanimous triple and $\pm1$ otherwise; $T(2,\pm3)$ is the trefoil mirror pair and $T(2,\pm1)$ is the unknot.
+\end{proof}
+
+On $\mathcal G_n$, conditional on $\mathcal F_n$, the eight sign triples at each slot are equally likely. Write $s=\varepsilon_1+\varepsilon_2+\varepsilon_3$; the braid exponent is $\eta_Hs$.
+\[
+\begin{array}{c|r|c@{\qquad}c|r|c}
+(\varepsilon_1,\varepsilon_2,\varepsilon_3)&s&\text{closure}
+ &(\varepsilon_1,\varepsilon_2,\varepsilon_3)&s&\text{closure}\\
+(+,+,+)& 3&\text{trefoil}&(-,-,-)&-3&\text{trefoil}\\
+(+,+,-)& 1&\text{unknot}&(-,-,+)&-1&\text{unknot}\\
+(+,-,+)& 1&\text{unknot}&(-,+,-)&-1&\text{unknot}\\
+(-,+,+)& 1&\text{unknot}&(+,-,-)&-1&\text{unknot}
+\end{array}
+\]
+Define
+\[
+ Y_{n,j}:=\mathbf 1\{\varepsilon_{n,j,1}=\varepsilon_{n,j,2}=\varepsilon_{n,j,3}\}.
+\]
+Lemma~\ref{lem:two-braid-closure} shows that $Y_{n,j}=1$ when the $j$th local factor is a trefoil and $Y_{n,j}=0$ when it is an unknot. \eqref{eq:conditional-internal-sign-law} therefore gives
+\begin{equation}
+ \mathcal L\bigl((Y_{n,1},\ldots,Y_{n,s_n})\mid\mathcal F_n\bigr)
+ =\operatorname{Bernoulli}(1/4)^{\otimes s_n}
+ \qquad\text{almost surely on }\mathcal G_n.
+ \label{eq:local-bernoulli}
+\end{equation}
+The mirror distinction is irrelevant for the determinant because both trefoils have determinant $3$.
+
+\subsection{Connected-sum factorization and the \texorpdfstring{$3$}{3}-adic valuation}
+For $\mathbf e=(\mathbf e_1,\ldots,\mathbf e_{s_n})\in(\{-1,+1\}^3)^{s_n}$, let $D_n[\mathbf e]$ denote the diagram obtained from the exposed shadow and exterior signs by assigning the reference-relative sign triple $\mathbf e_j$ to the $j$th selected slot.
+
+\begin{proposition}[Simultaneous connected-sum factorization]
+\label{prop:persistent-factorization}
+On $\mathcal G_n$, there are an $\mathcal F_n$-measurable knot type $K_n^{\mathrm{ext}}$ and $\mathcal F_n$-measurable maps
+\[
+ L_{n,j}:\{-1,+1\}^3\longrightarrow\{\text{knot types}\},
+ \qquad 1\le j\le s_n,
+\]
+such that, simultaneously for every internal sign vector $\mathbf e$,
+\begin{equation}
+ K(D_n[\mathbf e])
+ \cong
+ K_n^{\mathrm{ext}}\#L_{n,1}(\mathbf e_1)\#\cdots\#L_{n,s_n}(\mathbf e_{s_n}).
+ \label{eq:si-factorization}
+\end{equation}
+The knot $K_n^{\mathrm{ext}}$ is the same for all $\mathbf e$.  Moreover, $L_{n,j}(\mathbf e_j)$ is an unknot for a mixed triple and is the appropriate trefoil chirality for a unanimous triple.
+\end{proposition}
+
+\begin{proof}
+Use the family of pairwise disjoint separator balls fixed above.  In the $j$th ball, lift the fixed residual arc from Lemma~\ref{lem:simultaneous-separators} to a boundary-parallel trivial arc $\tau_j$ with the same two boundary points.  For any $\mathbf e$, replace the decorated local strand inside every ball by $\tau_j$.  All dependence on $\mathbf e$ lies inside the balls, so the resulting decorated residual diagram is the same for every $\mathbf e$.  Its knot type is $K_n^{\mathrm{ext}}$.  The residual shadow and the crossing signs retained outside the balls are $\mathcal F_n$-measurable, hence so is $K_n^{\mathrm{ext}}$.
+
+For each $j$, close the decorated local tangle in an abstract complementary ball by a boundary-parallel cap and call the resulting knot $L_{n,j}(\mathbf e_j)$.  The structured embedding and the fixed cap are determined by the exposed shadow, so the finite map $L_{n,j}$ is $\mathcal F_n$-measurable.  Cutting along the disjoint boundary spheres and capping the two sides is the standard connected-sum operation.  Applying it successively to the pairwise disjoint spheres gives \eqref{eq:si-factorization} for every $\mathbf e$ with the same exterior factor $K_n^{\mathrm{ext}}$.  Lemma~\ref{lem:two-braid-closure} identifies the local closure as the unknot for a mixed triple and as a trefoil for a unanimous triple.
+\end{proof}
+
+For the random internal vector $\boldsymbol\varepsilon$, set
+\[
+ B_n=\sum_{j=1}^{s_n}Y_{n,j}.
+\]
+Extend $K_n^{\mathrm{ext}}$ arbitrarily to $\mathcal G_n^c$; since $\mathcal G_n\in\mathcal F_n$, it remains $\mathcal F_n$-measurable. The fixed extension of $\boldsymbol\varepsilon$ also defines $B_n$ there. Proposition~\ref{prop:persistent-factorization}, determinant multiplicativity, and \eqref{eq:local-bernoulli} give, almost surely on $\mathcal G_n$,
+\begin{equation}
+ \det K(D_n)=\det(K_n^{\mathrm{ext}})3^{B_n},
+ \qquad
+ \mathcal L(B_n\mid\mathcal F_n)=\operatorname{Bin}(s_n,1/4),
+ \label{eq:si-hidden-coordinate-product}
+\end{equation}
+and therefore
+\begin{equation}
+ v_3\!\left(\det K(D_n)\right)=v_3(\det K_n^{\mathrm{ext}})+B_n.
+ \label{eq:si-hidden-coordinate}
+\end{equation}
+On $\mathcal G_n$, the factorization and determinant identities hold with the shadow and exterior signs fixed for every internal sign vector. The binomial law applies when the internal vector is sampled. The slot positions and $K_n^{\mathrm{ext}}$ may be dependent, while the conditional law of the internal signs remains product-uniform.
+
+\subsection{The maximal binomial atom}
+After conditioning on the shadow and the exterior signs, a prescribed determinant can force at most one value of $B_n$. Uniform determinant anti-concentration therefore reduces to a bound on the largest point mass of this binomial variable. The following elementary estimate is the final probabilistic input.
+
+\begin{lemma}[Binomial maximal atom]
+\label{lem:binomial-atom}
+If $B\sim\operatorname{Bin}(m,1/4)$, then
+\[
+ \sup_{k\in\mathbb Z}\Pr\{B=k\}
+ \le\sqrt{\frac{2\pi}{3m}}.
+\]
+\end{lemma}
+
+\begin{proof}
+The characteristic function is
+\[
+ \phi(t)=\frac34+\frac14e^{it},
+\]
+and
+\[
+ \lvert\phi(t)\rvert^2
+ =1-\frac34\sin^2(t/2).
+\]
+Fourier inversion and $1-x\le e^{-x}$ give
+\[
+ \Pr\{B=k\}
+ \le\frac1{2\pi}\int_{-\pi}^{\pi}
+ \exp\!\left(-\frac{3m}{8}\sin^2(t/2)\right)dt.
+\]
+For $\lvert t\rvert\le\pi$, $\sin(\lvert t\rvert/2)\ge\lvert t\rvert/\pi$. Extending the resulting Gaussian integral to $\mathbb R$ yields
+\[
+ \Pr\{B=k\}
+ \le\frac1{2\pi}\int_{\mathbb R}
+ \exp\!\left(-\frac{3m}{8\pi^2}t^2\right)dt
+ =\sqrt{\frac{2\pi}{3m}}.
+\]
+\end{proof}
+
+\begin{theorem}[Trefoil-slot determinant anti-concentration]
+\label{thm:si-det-anti}
+There are constants $\delta,c_0,C_0>0$ and $n_0\ge4$ such that, for $n\ge n_0$ and a uniform rooted diagram $D_n$ in either the rooted general or the rooted reduced Chapman class,
+\[
+ \sup_{a\ge1}\Pr\{\det K(D_n)=a\}
+ \le C_0e^{-c_0n}
+ +\sqrt{\frac{2\pi}{3\lfloor\delta n\rfloor}}
+ =O(n^{-1/2}).
+\]
+The bound is uniform over moving determinant targets $a=a_n$.
+\end{theorem}
+
+\begin{proof}
+Fix $a\ge1$.  On $\mathcal G_n$, condition on $\mathcal F_n$.  If $\det K(D_n)=a$, \eqref{eq:si-hidden-coordinate} forces
+\[
+ B_n=v_3(a)-v_3(\det K_n^{\mathrm{ext}}).
+\]
+Conditional on $\mathcal F_n$, the right-hand side is fixed, so at most one value of $B_n$ is possible. Lemma~\ref{lem:binomial-atom} gives
+\[
+ \mathbf 1_{\mathcal G_n}\Pr\{\det K(D_n)=a\mid\mathcal F_n\}
+ \le
+ \mathbf 1_{\mathcal G_n}\sqrt{\frac{2\pi}{3s_n}}.
+\]
+Taking expectations and adding $\Pr(\mathcal G_n^c)$ from Lemma~\ref{lem:shadow-selection} proves the displayed bound, uniformly in $a$.
+\end{proof}
+
+\begin{corollary}[Determinant collision entropy]
+\label{cor:si-det-entropy}
+For an independent copy $D_n'$,
+\[
+ \Pr\{\det K(D_n)=\det K(D_n')\}=O(n^{-1/2}),
+\]
+and
+\[
+ H_2(\det K(D_n))\ge\frac12\log n-O(1).
+\]
+\end{corollary}
+
+\begin{proof}
+Writing $p_a=\Pr\{\det K(D_n)=a\}$,
+\[
+ \Pr\{\det K(D_n)=\det K(D_n')\}
+ =\sum_a p_a^2
+ \le\sup_a p_a.
+\]
+Apply Theorem~\ref{thm:si-det-anti} and take negative logarithms.
+\end{proof}
+
+Theorem~\ref{thm:si-det-anti} is a moving-target statement. The stronger exponential estimate for a fixed determinant uses a different binomial lower-tail argument and is proved in Section~\ref{sec:si-fixed-targets}.
+% END INLINED FILE: si/sections/S4_random_diagrams.tex
+% BEGIN INLINED FILE: si/sections/S5_fixed_targets.tex
+\section{Fixed targets, determinant refinements, and bit complexity}
+\label{sec:si-fixed-targets}
+The determinant anti-concentration theorem yields fixed-target, determinant-refinement, independent-database, and balanced-benchmark consequences. Determinant evaluation also has polynomial bit complexity.
+
+\subsection{Fallback identities}
+\begin{proposition}[Black-hole and fallback identities]
+\label{prop:si-black-hole-identities}
+Let $(\Omega_n,\mu_n)$ be any discrete object ensemble and let $I$ be a sound invariant. Fix any complete decision procedure $\mathsf{Decide}$ for the underlying equivalence problem and define the invariant-first algorithm
+\[
+ \mathsf A_I(x,y)=
+ \begin{cases}
+  \textup{\textsc{No}},& I(x)\ne I(y),\\
+  \mathsf{Decide}(x,y),& I(x)=I(y).
+ \end{cases}
+\]
+The black hole of this algorithm is
+\[
+ \mathcal B_n(I)=\{(x,y)\in\Omega_n^2:I(x)=I(y)\}.
+\]
+If $X_n,X_n'$ are independent with law $\mu_n$, then
+\begin{equation}
+ \Pr\{(X_n,X_n')\in\mathcal B_n(I)\}
+ =\sum_v\Pr\{I(X_n)=v\}^2
+ =\alpha_n(I).
+ \label{eq:si-black-hole-identity}
+\end{equation}
+For a fixed target $x_*$, the corresponding one-object fallback set is
+\[
+ \mathcal B_n(I;x_*)=\{x\in\Omega_n:I(x)=I(x_*)\},
+\]
+and its mass is the single atom
+\begin{equation}
+ p_n(I;x_*):=\Pr\{X_n\in\mathcal B_n(I;x_*)\}
+ =\Pr\{I(X_n)=I(x_*)\}.
+ \label{eq:si-fixed-atom}
+\end{equation}
+The random-pair probability averages over a second independent sample, whereas the fixed-target probability is the mass of one prescribed fiber.
+
+For an observed database $x_1,\ldots,x_M$, write
+$N_v=\#\{i:I(x_i)=v\}$.  The all-pairs fallback count is
+\begin{equation}
+ F_M(I)=\sum_v\binom{N_v}{2}.
+ \label{eq:si-observed-fallback}
+\end{equation}
+Pointwise, $F_M(I)=C_M(I)$.  Under iid sampling,
+$\mathbb EF_M(I)=\binom M2\alpha_n(I)$.  These identities count fallback calls only; they do not weight calls by the runtime of the complete decider.
+\end{proposition}
+
+\begin{corollary}[Vanishing determinant black hole for a random pair]
+\label{cor:si-random-black-hole}
+For independent uniform rooted diagrams $D_n,D_n'$ in either diagram model,
+\[
+ \Pr\{(D_n,D_n')\in\mathcal B_n(\det)\}
+ =\alpha_n(\det)=O(n^{-1/2}).
+\]
+Thus the determinant-first algorithm returns a sound negative answer before fallback with probability $1-O(n^{-1/2})$.
+\end{corollary}
+
+\begin{proof}
+Apply Proposition~\ref{prop:si-black-hole-identities} and Corollary~\ref{cor:si-det-entropy}.
+\end{proof}
+
+\subsection{Exponential rarity of a fixed determinant}
+Recall from Section~\ref{sec:si-random-diagrams} that $\mathcal G_n\in\mathcal F_n$ and, almost surely on the good-shadow event $\mathcal G_n$,
+\begin{equation}
+ \det K(D_n)=\det(K_n^{\mathrm{ext}})3^{B_n},
+ \qquad
+ \mathcal L(B_n\mid\mathcal F_n)=\operatorname{Bin}(s_n,1/4),
+ \qquad
+ s_n=\lfloor\delta n\rfloor,
+ \label{eq:si-fixed-target-coordinate}
+\end{equation}
+where $K_n^{\mathrm{ext}}$ is $\mathcal F_n$-measurable and $\Pr(\mathcal G_n^c)\le C_0e^{-c_0n}$.
+
+\begin{theorem}[Fixed determinant values are exponentially rare]
+\label{thm:si-fixed-determinant}
+For every fixed positive integer $a$, there are constants $C_a,c_a>0$ such that, in either diagram model,
+\begin{equation}
+ \Pr\{\det K(D_n)=a\}\le C_ae^{-c_an}.
+ \label{eq:si-fixed-determinant-rate}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Let $r=v_3(a)$.  On $\mathcal G_n$, \eqref{eq:si-fixed-target-coordinate} and nonnegativity of $v_3(\det K_n^{\mathrm{ext}})$ imply
+\[
+ \det K(D_n)=a
+ \quad\Longrightarrow\quad
+ B_n\le r.
+\]
+Since $\mathcal G_n\in\mathcal F_n$ and $K_n^{\mathrm{ext}}$ is $\mathcal F_n$-measurable,
+\[
+ \Pr\{\det K(D_n)=a,\mathcal G_n\}
+ \le
+ \mathbb E\!\left[\mathbf 1_{\mathcal G_n}\Pr\{B_n\le r\mid\mathcal F_n\}\right].
+\]
+For $B\sim\operatorname{Bin}(m,1/4)$,
+\begin{align}
+ \Pr\{B\le r\}
+ &=\left(\frac34\right)^m
+   \sum_{j=0}^{r}\binom mj3^{-j}\notag\\
+ &\le
+ \left(\frac34\right)^m
+ \sum_{j=0}^{r}\frac{m^j}{3^jj!}
+ \le C_r m^r\left(\frac34\right)^m.
+ \label{eq:si-fixed-binomial-tail}
+\end{align}
+By the conditional law in \eqref{eq:si-fixed-target-coordinate}, the conditional probability inside the expectation is exactly this binomial lower tail with $m=s_n$ on $\mathcal G_n$. Because $r$ is fixed and $s_n\ge(\delta/2)n$ for all sufficiently large $n$, the polynomial factor can be absorbed into the exponential.  For example, after increasing the multiplicative constant,
+\[
+ s_n^r\left(\frac34\right)^{s_n}
+ \le
+ C_r'\exp\!\left[-\frac{\delta}{4}\log\!\left(\frac43\right)n\right].
+\]
+Adding the exceptional probability $C_0e^{-c_0n}$ proves \eqref{eq:si-fixed-determinant-rate} with
+\[
+ c_a=\min\!\left\{c_0,\frac{\delta}{4}\log\!\left(\frac43\right)\right\}
+\]
+and a target-dependent constant $C_a$.
+\end{proof}
+
+\begin{corollary}[Fixed targets and fixed knot types]
+\label{cor:si-fixed-knot}
+For every fixed knot $K_*$,
+\[
+ \Pr\{\det K(D_n)=\det K_*\}=O_{K_*}(e^{-c_{K_*}n}),
+\]
+and hence
+\[
+ \Pr\{K(D_n)\cong K_*\}=O_{K_*}(e^{-c_{K_*}n}).
+\]
+The determinant-first algorithm comparing $D_n$ with $K_*$ therefore enters its fallback with exponentially small probability.
+\end{corollary}
+
+The fixed-target estimate follows from $B_n\le v_3(\det K_*)$.  For a random target, the corresponding valuation can lie in the central range of the binomial law, so the two-sample collision estimate is different.
+
+\subsection{Determinant-refining invariants}
+The normalized Alexander polynomial determines the determinant through $\det K=\lvert\Delta_K(-1)\rvert$. Consequently, all diagrams with one prescribed Alexander polynomial lie in a single determinant fiber. The same argument applies to any invariant from which the determinant can be recovered, and the following definition records precisely that property.
+
+\begin{definition}
+A normalized invariant $J$ is \emph{determinant-refining} on a class of knots if there is a deterministic recovery map $g$ such that
+\[
+ \det K=g(J(K))
+\]
+for every knot in that class.
+\end{definition}
+
+\begin{proposition}[Monotonicity under deterministic refinement]
+\label{prop:si-refinement-monotonicity}
+If $J$ is determinant-refining, then
+\begin{equation}
+ p_n^{\max}(J)\le p_n^{\max}(\det),
+ \qquad
+ \alpha_n(J)\le\alpha_n(\det).
+ \label{eq:si-refinement-collision}
+\end{equation}
+For every fixed normalized value $w$ of $J$,
+\begin{equation}
+ \Pr\{J(D_n)=w\}
+ \le
+ \Pr\{\det K(D_n)=g(w)\}.
+ \label{eq:si-refinement-fixed}
+\end{equation}
+Consequently, every such $J$ inherits the $O(n^{-1/2})$ random-pair collision estimate and exponential fixed-value rarity.
+\end{proposition}
+
+\begin{proof}
+Every $J$-fiber is contained in one determinant fiber.  The maximal-atom inequality follows immediately.  If $q_w=\Pr\{J(D_n)=w\}$, then grouping the $q_w$ over the determinant fibers gives
+\[
+ \sum_wq_w^2
+ \le
+ \sum_a\left(\sum_{g(w)=a}q_w\right)^2
+ =\alpha_n(\det),
+\]
+which proves the collision inequality.  \eqref{eq:si-refinement-fixed} is the same fiber inclusion for one value.
+\end{proof}
+
+Table~\ref{tab:determinant-refinements} lists determinant-refining invariants and the required normalization data.  Grading-forgotten homology ranks or unspecified polynomial normalizations need not determine the determinant.
+
+\begin{table}[ht]
+\centering
+\caption{Determinant-refining invariants and required normalizations.  Refinement transfers the probability bounds but does not imply polynomial-time evaluation.}
+\label{tab:determinant-refinements}
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{0.19\textwidth}>{\raggedright\arraybackslash}p{0.29\textwidth}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{0.18\textwidth}}
+\toprule
+Fingerprint & Recovery of $\det K$ & Normalization information that must be retained & Consequence \\
+\midrule
+Determinant & Identity & Positive integer $|\Delta_K(-1)|$ & Polynomial-time evaluation \\
+Normalized Alexander polynomial & $|\Delta_K(-1)|$ & Symmetric Laurent polynomial with $\Delta_K(1)=1$ \cite{lickorish1997} & Collision and fixed-value bounds \\
+Jones polynomial & $|V_K(-1)|$ & Standard oriented normalization with $V_{\bigcirc}=1$ \cite{jones1985} & Collision and fixed-value bounds \\
+HOMFLY--PT polynomial & Standard Alexander specialization, then $|\Delta_K(-1)|$ & Full normalized two-variable polynomial with $P_{\bigcirc}=1$ and its skein-variable convention retained \cite{freydetal1985} & Collision and fixed-value bounds \\
+Unreduced bigraded Khovanov homology & Divide the graded Euler characteristic $\chi_q(K)$ by $q+q^{-1}$, recover $V_K(t)$ with $t=q^2$, and take $|V_K(-1)|$ & Both gradings and the oriented normalization shift retained; $V_{\bigcirc}=1$ \cite{khovanov2000} & Collision and fixed-value bounds \\
+Bigraded knot Floer homology $\widehat{HFK}$ & Graded Euler characteristic gives the symmetrized Alexander polynomial & Maslov and Alexander gradings retained \cite{ozsvathszabo2004} & Collision and fixed-value bounds \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+For the unreduced convention in Table~\ref{tab:determinant-refinements}, $\chi_q(K)=(q+q^{-1})V_K(q^2)$; form the Laurent-polynomial quotient by $q+q^{-1}$ before evaluation.
+
+Grading-forgotten specializations, total ranks, a single coefficient, and isolated higher-color evaluations are absent from the table because they need not determine the determinant.  A joint fingerprint containing a determinant-refining component is itself determinant-refining.
+
+\subsection{Polynomial bit complexity of the determinant branch}
+We use a standard combinatorial input model: an $n$-crossing knot diagram is given by a planar-map or signed Gauss-type encoding of length polynomial in $n$.  Checkerboard shading produces a reduced Goeritz matrix $G_D$ whose absolute determinant is the knot determinant \cite{gordonlitherland1978}.  The number of white regions is at most $n+2$, so $G_D$ has order at most $n+1$.  Every entry is a signed sum of crossing incidences and has absolute value at most $n$.
+
+\begin{proposition}[Determinant evaluation is polynomial-time]
+\label{prop:si-det-complexity}
+The knot determinant of an $n$-crossing diagram can be computed in polynomial bit complexity.
+\end{proposition}
+
+\begin{proof}
+Constructing the checkerboard graph and $G_D$ requires polynomial time.  Apply fraction-free Gaussian elimination to $G_D$ \cite{bareiss1968}, with row or column pivoting when needed.  The algorithm uses $O(n^3)$ exact integer arithmetic operations.  Its intermediate entries are minors of the input matrix.  If $H$ is any $r\times r$ minor, Hadamard's inequality gives
+\[
+ |\det H|
+ \le \prod_{i=1}^{r}\|H_i\|_2
+ \le (\sqrt r\,n)^r.
+\]
+Since $r\le n+1$, every intermediate integer has $O(n\log n)$ bits.  Addition, multiplication, exact division, and comparison of integers of this length all have polynomial bit cost, and there are polynomially many such operations.  The final absolute determinant is therefore obtained in polynomial bit complexity.
+\end{proof}
+
+The first branch has polynomial bit complexity.  Complete knot equivalence is decidable by normal-surface classification procedures \cite{haken1961,hemion1992}, so the invariant-first procedure is a total algorithm.  Results on the complexity of unknotting, splitting, genus, and knottedness concern related decision problems \cite{hasslagariaspippenger1999,lackenby2021}.  No runtime bound for the complete branch enters the present result.  The estimate
+\[
+ \Pr\{\text{fallback}\}=O(n^{-1/2})
+\]
+controls how often that branch is called, not its contribution to expected runtime; a sufficiently expensive rare branch can dominate an expectation.  The algorithmic conclusion is that a sound negative answer is produced at polynomial cost on a set of random pairs of probability $1-O(n^{-1/2})$.
+
+\subsection{Independent databases}
+\begin{corollary}[Collision-free independent databases]
+\label{cor:si-no-fallback}
+Let $D_n^{(1)},\ldots,D_n^{(M_n)}$ be independent uniform rooted diagrams from the complexity-$n$ law in either diagram model, and let $F_{M_n}(\det)$ be the number of determinant-first all-pairs fallback calls. Then
+\[
+ \mathbb EF_{M_n}(\det)
+ =\binom{M_n}{2}\alpha_n(\det)
+ =O(M_n^2n^{-1/2}).
+\]
+Consequently,
+\[
+ M_n=o(n^{1/4})
+ \quad\Longrightarrow\quad
+ \Pr\{F_{M_n}(\det)>0\}\longrightarrow0.
+\]
+\end{corollary}
+
+\begin{proof}
+Use Proposition~\ref{prop:si-black-hole-identities}, Corollary~\ref{cor:si-det-entropy}, and Markov's inequality.
+\end{proof}
+
+This is a sufficient range.  The determinant theorem gives no lower bound on $\alpha_n(\det)$, so it gives no converse at $M\asymp n^{1/4}$.
+
+\subsection{Balanced classification benchmarks}
+A classifier can achieve high accuracy on random knot pairs by using only a cheap incomplete invariant. It accepts pairs with equal invariant values and rejects all pairs with unequal values. Soundness gives perfect acceptance on equivalent pairs, while a small collision probability makes the rule correct on most inequivalent pairs. A balanced benchmark gives equal weight to these positive and negative classes, and the following proposition quantifies this invariant-only baseline.
+
+\begin{proposition}[Balanced accuracy of invariant-only classifiers]
+\label{prop:si-ml-shortcut}
+Let $D_n,D_n'$ be independent with law $\mu_n$, let
+\[
+ \mathcal K_n=\{K(D_n)\cong K(D_n')\},
+ \qquad q_n=\Pr(\mathcal K_n)<1,
+\]
+and let $I$ be any sound invariant.  Consider a balanced binary benchmark in which the positive class consists of equivalent pairs and the negative class has the law of $(D_n,D_n')$ conditioned on $\mathcal K_n^c$.  The classifier
+\[
+ h_I(D,D')=\mathbf 1_{\{I(D)=I(D')\}}
+\]
+has balanced accuracy
+\begin{equation}
+ \operatorname{BAcc}(h_I)
+ =1-\frac12\frac{\alpha_n(I)-q_n}{1-q_n}
+ \ge
+ 1-\frac{\alpha_n(I)}{2}.
+ \label{eq:si-ml-balanced-accuracy}
+\end{equation}
+Consequently, if $\alpha_n(I)\to0$, then $\operatorname{BAcc}(h_I)\to1$.  In the two rooted Chapman ensembles, the determinant and every normalized determinant-refining invariant satisfy
+\[
+ \operatorname{BAcc}(h_I)=1-O(n^{-1/2}).
+\]
+
+For a fixed target knot $K_*$, set
+\[
+ p_n(I;K_*)=\Pr\{I(D_n)=I(K_*)\},
+ \qquad
+ r_n(K_*)=\Pr\{K(D_n)\cong K_*\}<1.
+\]
+On a balanced target-recognition benchmark whose positive class represents $K_*$ and whose negative class is $D_n$ conditioned on $K(D_n)\not\cong K_*$, the rule $g_{I,K_*}(D)=\mathbf 1_{\{I(D)=I(K_*)\}}$ has
+\begin{equation}
+ \operatorname{BAcc}(g_{I,K_*})
+ =1-\frac12\frac{p_n(I;K_*)-r_n(K_*)}{1-r_n(K_*)}
+ \ge 1-\frac{p_n(I;K_*)}{2}.
+ \label{eq:si-ml-fixed-target-accuracy}
+\end{equation}
+Hence every fixed determinant-refining target has balanced accuracy $1-O(e^{-cn})$ under the corresponding invariant-only rule.
+\end{proposition}
+
+\begin{proof}
+Equivalent knots have equal invariant values, so the true-positive rate of $h_I$ is one.  On the conditioned negative class, the false-positive probability is
+\[
+ \Pr\{I(D_n)=I(D_n')\mid\mathcal K_n^c\}
+ =\frac{\Pr\{I(D_n)=I(D_n')\}-\Pr(\mathcal K_n)}{1-q_n}
+ =\frac{\alpha_n(I)-q_n}{1-q_n}.
+\]
+Averaging the true-positive and true-negative rates gives the equality in \eqref{eq:si-ml-balanced-accuracy}.  Since $\mathcal K_n\subseteq\mathcal B_n(I)$, we have $0\le q_n\le\alpha_n(I)$.  The map $q\mapsto(\alpha_n(I)-q)/(1-q)$ is decreasing on this interval, and therefore
+\[
+ \frac{\alpha_n(I)-q_n}{1-q_n}
+ \le \alpha_n(I),
+\]
+which proves the claimed bound in terms of collision mass alone.  The fixed-target identity is the same calculation with the inclusions
+\[
+ \{K(D_n)\cong K_*\}
+ \subseteq
+ \{I(D_n)=I(K_*)\}.
+\]
+Since $0\le r_n(K_*)\le p_n(I;K_*)$, the same monotonicity argument gives
+$\frac{p_n(I;K_*)-r_n(K_*)}{1-r_n(K_*)}\le p_n(I;K_*)$.
+The asymptotic conclusions follow from Corollary~\ref{cor:si-random-black-hole}, Proposition~\ref{prop:si-refinement-monotonicity}, and Theorem~\ref{thm:si-fixed-determinant}.
+\end{proof}
+
+The rates above concern the displayed invariant-only rules under the stated probability laws; they do not describe a particular trained network. High balanced accuracy alone therefore does not show that a classifier distinguishes pairs that the chosen fingerprint fails to separate. To test that question, restrict the negative class to inequivalent pairs with equal fingerprint values. For any classifier $f$ and normalized fingerprint $J$, whenever the conditioning event has positive probability, define the rejection rate on collision-conditioned negative pairs by
+\[
+ \Pi_n(f;J)=
+ \Pr\{f(D_n,D_n')=\textup{\textsc{No}}\mid J(D_n)=J(D_n'),\ K(D_n)\not\cong K(D_n')\}.
+\]
+This rate should be reported together with the classifier's acceptance rate on equivalent pairs, since the constant-$\textup{\textsc{No}}$ rule has $\Pi_n(f;J)=1$.  If $J_2$ refines $J_1$, then $\{J_2(D_n)=J_2(D_n')\}\subseteq\{J_1(D_n)=J_1(D_n')\}$.  Thus $\Pi_n(f;J)$ is the rejection probability among inequivalent pairs in the corresponding invariant-equality event.
+% END INLINED FILE: si/sections/S5_fixed_targets.tex
+% BEGIN INLINED FILE: si/sections/S6_finite_population.tex
+\section{Collisions in a finite census}
+\label{si:finite-population}
+This section treats uniform sampling without replacement from a fixed finite census.  The rooted random-diagram law of the main theorem is a different probability measure.
+
+\subsection{Fiber profiles and the replacement correction}
+Let the census contain $T$ distinct entries, partitioned into $R$ nonempty invariant fibers of sizes
+\[
+ m_1,\ldots,m_R,
+ \qquad
+ \sum_{v=1}^R m_v=T.
+\]
+The with-replacement and known-distinct pair-collision masses are
+\[
+ \alpha^{\wrp}:=\sum_v\left(\frac{m_v}{T}\right)^2,
+ \qquad
+ \alpha^{\neqp}:=\frac{\sum_vm_v(m_v-1)}{T(T-1)}.
+\]
+They satisfy the identity
+\begin{equation}
+ \alpha^{\neqp}
+ =\frac{T\alpha^{\wrp}-1}{T-1},
+ \qquad
+ \alpha^{\wrp}-\alpha^{\neqp}
+ =\frac{1-\alpha^{\wrp}}{T-1}.
+ \label{si:eq:replacement-correction}
+\end{equation}
+Indeed, $T^2\alpha^{\wrp}=\sum_vm_v^2$ and
+$T(T-1)\alpha^{\neqp}=\sum_vm_v^2-T$.
+
+\subsection{Mean and variance without replacement}
+Choose a uniform $M$-subset of the $T$ entries and let $C_M^{\mathrm{fp}}$ be the number of unordered pairs in the subset that lie in a common fiber.  Write
+\[
+ (x)_k=x(x-1)\cdots(x-k+1),
+\]
+with $(x)_0=1$, and set
+\[
+ S_2=\sum_v(m_v)_2,
+ \qquad
+ S_3=\sum_v(m_v)_3,
+\]
+\[
+ a=\frac{S_2}{(T)_2}=\alpha^{\neqp},
+ \qquad
+ b=\frac{S_3}{(T)_3},
+ \qquad
+ d=\frac{S_2^2-4S_3-2S_2}{(T)_4}.
+\]
+Here $b$ is the probability that two sampled pairs sharing one endpoint both collide, and $d$ is the corresponding probability for two disjoint sampled pairs.
+
+\begin{theorem}[Finite-population collision moments]
+\label{si:thm:finite-moments}
+For $T\ge4$ and $0\le M\le T$,
+\begin{align}
+ \mathbb E C_M^{\mathrm{fp}}
+ &=\binom M2a,
+ \label{si:eq:finite-mean}\\
+ \operatorname{Var}(C_M^{\mathrm{fp}})
+ &=\binom M2(a-a^2)
+   +6\binom M3(b-a^2)
+   +6\binom M4(d-a^2).
+ \label{si:eq:finite-variance}
+\end{align}
+Terms whose binomial coefficient vanishes are omitted automatically.
+\end{theorem}
+
+\begin{proof}
+Expose the sampled subset in a uniformly random order $Y_1,\ldots,Y_M$ and put
+\[
+ I_{ij}=\mathbf 1_{\{I(Y_i)=I(Y_j)\}}.
+\]
+Every pair has collision probability $a$, proving \eqref{si:eq:finite-mean}.  Two indicators sharing one index are simultaneously one if and only if three distinct sampled entries lie in the same fiber, which has probability $b$.
+
+For two disjoint pairs, the numerator of the joint-collision probability is
+\[
+ \sum_v(m_v)_4+
+ \sum_{v\ne w}(m_v)_2(m_w)_2.
+\]
+The identity
+\[
+ (m)_2^2-(m)_4=4(m)_3+2(m)_2
+\]
+shows that this numerator equals $S_2^2-4S_3-2S_2$, giving $d$.  The complete graph on $M$ sampled positions contains $3\binom M3$ unordered pairs of edges sharing a vertex and $3\binom M4$ unordered pairs of disjoint edges.  Covariances are doubled in the variance expansion, yielding \eqref{si:eq:finite-variance}.
+\end{proof}
+
+\begin{corollary}[Relative variance]
+\label{si:cor:finite-relative-variance}
+For $T\ge4$, $M\ge2$, and $a>0$,
+\begin{equation}
+ \frac{\operatorname{Var}(C_M^{\mathrm{fp}})}
+ {(\mathbb E C_M^{\mathrm{fp}})^2}
+ \le
+ \frac4{M^2a}
+ +\frac8{M\sqrt a}
+ +\frac{20}{T}.
+ \label{si:eq:finite-relative-variance}
+\end{equation}
+\end{corollary}
+
+\begin{proof}
+The first variance contribution uses $a-a^2\le a$.  Termwise,
+$(m)_3\le (m)_2^{3/2}$, and therefore
+\[
+ S_3\le S_2^{3/2}.
+\]
+For $T\ge4$ this gives
+\[
+ b\le a^{3/2}\frac{(T)_2^{3/2}}{(T)_3}
+ =a^{3/2}\frac{\sqrt{T(T-1)}}{T-2}
+ \le2a^{3/2}.
+\]
+Also,
+\[
+ d\le\frac{S_2^2}{(T)_4}
+ =a^2\frac{T(T-1)}{(T-2)(T-3)},
+\]
+so
+\[
+ d-a^2
+ \le a^2\frac{4T-6}{(T-2)(T-3)}
+ \le\frac{20}{T}a^2.
+\]
+Dividing \eqref{si:eq:finite-variance} by
+$\binom M2^2a^2$ and using
+\[
+ \binom M2^{-1}\le\frac4{M^2},
+ \qquad
+ \frac{6\binom M3}{\binom M2^2}\le\frac4M,
+ \qquad
+ \frac{6\binom M4}{\binom M2^2}\le1
+\]
+proves the claim.
+\end{proof}
+
+The mean controls the regime in which collisions disappear, while the relative-variance bound controls the regime in which they occur with high probability. Together they give the finite-population birthday dichotomy.
+
+\begin{theorem}[Finite-population inverse birthday law]
+\label{si:thm:finite-zero-one}
+Consider a sequence of finite censuses with $T_n\to\infty$, and choose a uniform $M_n$-subset from the $n$th census.
+\begin{enumerate}[label=(\roman*)]
+ \item If $M_n^2\alpha_n^{\neqp}\to0$, then
+ \[
+  \Pr\{C_{M_n}^{\mathrm{fp}}>0\}\to0.
+ \]
+ \item If $M_n^2\alpha_n^{\neqp}\to\infty$, then
+ \[
+  \Pr\{C_{M_n}^{\mathrm{fp}}>0\}\to1.
+ \]
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+The first statement follows from Markov's inequality and \eqref{si:eq:finite-mean}.  Under the second hypothesis, both
+$M_n^2a_n$ and $M_n\sqrt{a_n}$ diverge, while $T_n\to\infty$.  The right-hand side of \eqref{si:eq:finite-relative-variance} therefore tends to zero.  Chebyshev's inequality gives
+$\Pr\{C_{M_n}^{\mathrm{fp}}=0\}\to0$.
+\end{proof}
+
+\subsection{No-collision probabilities}
+A collision-free sample contains at most one entry from each invariant fiber. The number of such samples is encoded by an elementary symmetric polynomial.
+Let $e_M(m_1,\ldots,m_R)$ denote the $M$th elementary symmetric polynomial, with $e_0=1$.
+
+\begin{theorem}[Finite-census no-collision probabilities]
+\label{si:thm:exact-finite-curves}
+For a uniform $M$-subset of the census,
+\begin{equation}
+ \Pr\{C_M^{\mathrm{fp}}=0\}
+ =\frac{e_M(m_1,\ldots,m_R)}{\binom TM}.
+ \label{si:eq:exact-no-collision}
+\end{equation}
+For $M$ independent draws with replacement from the same census,
+\begin{equation}
+ \Pr\{C_M=0\}
+ =\frac{M!\,e_M(m_1,\ldots,m_R)}{T^M}.
+ \label{si:eq:exact-no-collision-wr}
+\end{equation}
+Both probabilities are zero when $M>R$.
+\end{theorem}
+
+\begin{proof}
+A collision-free subset chooses one entry from each of $M$ distinct fibers.  For a fixed set of fibers, the number of choices is the product of their sizes; summing over all fiber sets gives $e_M$.  In ordered sampling with replacement, the same selected entries can appear in $M!$ orders.
+\end{proof}
+
+The coefficients $e_0,\ldots,e_R$ can be computed in $O(TR)$ integer operations by multiplying
+\[
+ \prod_{v=1}^R(1+m_vz)
+\]
+coefficient by coefficient.  \eqref{si:eq:exact-no-collision} therefore determines the probability for every $M$.  A percentile such as
+\[
+ M_{50}=\min\{M:\Pr(C_M^{\mathrm{fp}}>0)\ge1/2\}
+\]
+is then obtained by the integer comparison
+$2e_M\le\binom TM$.
+
+\subsection{The extremal profile at fixed support}
+Among profiles with the same $T$ and $R$, the balanced profile maximizes the no-collision probability at every database size.
+
+\begin{theorem}[Balanced-fiber extremum]
+\label{si:thm:balanced-extremum}
+Fix integers $1\le R\le T$ and let $m=(m_1,\ldots,m_R)$ range over positive integer vectors with sum $T$.  Write
+\[
+ T=qR+r,
+ \qquad
+ 0\le r<R,
+\]
+and let
+\[
+ b=(\underbrace{q+1,\ldots,q+1}_{r},
+    \underbrace{q,\ldots,q}_{R-r})
+\]
+be the balanced profile.  Then:
+\begin{enumerate}[label=(\roman*)]
+ \item $b$ minimizes $\alpha^{\neqp}$, with minimum
+ \begin{equation}
+  \alpha_{\min}^{\neqp}(T,R)
+  =\frac{Rq(q-1)+2rq}{T(T-1)};
+  \label{si:eq:exact-balanced-min}
+ \end{equation}
+ \item for every $0\le M\le T$,
+ \begin{equation}
+  e_M(m_1,\ldots,m_R)
+  \le e_M(b_1,\ldots,b_R),
+  \label{si:eq:balanced-emax}
+ \end{equation}
+ so the balanced profile maximizes the no-collision probability for every database size $M$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Suppose two coordinates satisfy $x\ge y+2$.  Replace them by $x-1$ and $y+1$.  This preserves positivity and the total sum, while
+\[
+ x^2+y^2-[(x-1)^2+(y+1)^2]
+ =2(x-y-1)>0.
+\]
+Hence repeated balancing decreases $\sum_vm_v^2$ until all coordinates differ by at most one.  Since
+\[
+ \alpha^{\neqp}=\frac{\sum_vm_v^2-T}{T(T-1)},
+\]
+this proves part (i), and direct substitution gives \eqref{si:eq:exact-balanced-min}.
+
+For part (ii), the cases $M=0$ and $M=1$ are immediate. Assume $M\ge2$, hold the remaining $R-2$ coordinates fixed, and write their elementary symmetric polynomials as $E_j$.  Then
+\[
+ e_M(x,y,\text{others})
+ =xyE_{M-2}+(x+y)E_{M-1}+E_M.
+\]
+The balancing move fixes $x+y$ and increases the product by
+\[
+ (x-1)(y+1)-xy=x-y-1>0.
+\]
+Since $E_{M-2}\ge0$, the move cannot decrease $e_M$.  Iteration reaches the balanced profile, proving \eqref{si:eq:balanced-emax}.
+\end{proof}
+
+\begin{corollary}[Bound from support size]
+\label{si:cor:support-bound}
+For every fiber profile,
+\begin{equation}
+ \alpha^{\neqp}
+ \ge\frac{T-R}{R(T-1)}.
+ \label{si:eq:support-bound}
+\end{equation}
+Equality in this Cauchy bound requires equal fibers and therefore can occur only when $R$ divides $T$.
+\end{corollary}
+
+\begin{proof}
+Cauchy's inequality gives
+$\sum_vm_v^2\ge T^2/R$.  Substitute into
+$\alpha^{\neqp}=(\sum_vm_v^2-T)/[T(T-1)]$.
+\end{proof}
+
+If a census sequence satisfies
+\[
+ \frac{T_n-R_n}{T_n-1}\ge\eta>0,
+\]
+then
+\[
+ \alpha_n^{\neqp}\ge\frac{\eta}{R_n},
+\]
+and databases with $M_n^2/R_n\to\infty$ collide with high probability.  Balanced profiles with $T_n/R_n\to\rho>1$ have
+$\alpha_n^{\neqp}=\Theta(R_n^{-1})$, so their birthday scale has order $\sqrt{R_n}$.  Near-injective sequences fall outside this conclusion.  When $R=T$, every fiber is a singleton, $\alpha^{\neqp}=0$, and a database sampled without replacement never contains an invariant collision.
+
+\begin{remark}[Sampling law]
+Throughout this section, the underlying population is a fixed census.  The principal law is uniform sampling without replacement; the displayed companion formula treats independent draws with replacement.  Chapman's rooted random-diagram measure and a distribution on knot types define different probability laws and require separate analyses.
+\end{remark}
+% END INLINED FILE: si/sections/S6_finite_population.tex
+% BEGIN INLINED FILE: si/sections/S7_benchmark_protocol.tex
+\section{Census data and a finite benchmark}
+\label{si:census-computations}
+The examples below are hypothetical finite profiles, not knot-census data, and do not estimate the Chapman-model limit.  We first list the information required for an empirical census calculation.
+
+\subsection{Data required for a census calculation}
+An empirical census calculation should record:
+\begin{enumerate}[label=(\roman*)]
+ \item the source census, version, retrieval date, and checksum;
+ \item whether entries are knots, links, prime types, mirror-identified types, or diagram representatives;
+ \item the crossing range and cumulative versus exact-crossing convention;
+ \item a stable object identifier and duplicate policy;
+ \item the normalization and equality convention for every invariant;
+ \item the exact fiber table $\{(v,m_v)\}$;
+ \item exact-integer outputs for $T$, $R$, largest fiber, singleton counts, $\alpha^{\wrp}$, $\alpha^{\neqp}$, and $e_M$;
+ \item a script regenerating every table and vector figure.
+\end{enumerate}
+
+\subsection{A finite profile}
+Larger occupied support need not imply a larger median collision threshold: one heavy fiber can decrease $M_{50}$.
+\begin{proposition}[Support and database capacity]
+\label{prop:si-finite-benchmark}
+Consider the two fiber profiles on $T=1000$ entries
+\[
+ A=(101,1^{899}),
+ \qquad
+ B=(2^{500}).
+\]
+Profile $A$ occupies more invariant values than profile $B$, but
+\[
+ \alpha_A^{\neqp}=\frac{101}{9990}>\frac1{999}=\alpha_B^{\neqp},
+ \qquad
+ M_{50}(A)=17<38=M_{50}(B).
+\]
+Thus occupied support and database capacity can rank fingerprints in opposite orders.
+\end{proposition}
+
+The first profile has one large fiber, whereas every fiber of the second has size two. Table~\ref{si:tab:profile-benchmark} gives their values.
+
+\begin{table}[ht]
+\centering
+\caption{Two finite fiber profiles.  $M_{50}$ is the smallest database size whose collision probability is at least one half.}
+\label{si:tab:profile-benchmark}
+\begin{tabular}{lrrrrr}
+\toprule
+Profile & $R$ & $R/T$ & $\alpha^{\wrp}$ & $\alpha^{\neqp}$ & $M_{50}$\\
+\midrule
+$A=(101,1^{899})$ & 900 & 0.90 & $111/10000$ & $101/9990$ & 17\\
+$B=(2^{500})$ & 500 & 0.50 & $1/500$ & $1/999$ & 38\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{proof}
+The elementary-symmetric numerators have closed forms:
+\begin{align*}
+ e_M(A)
+ &=\binom{899}{M}+101\binom{899}{M-1},\\
+ e_M(B)
+ &=2^M\binom{500}{M}.
+\end{align*}
+Consequently,
+\begin{align*}
+ \Pr_A\{C_M^{\mathrm{fp}}=0\}
+ &=\frac{\binom{899}{M}+101\binom{899}{M-1}}{\binom{1000}{M}},\\
+ \Pr_B\{C_M^{\mathrm{fp}}=0\}
+ &=\frac{2^M\binom{500}{M}}{\binom{1000}{M}}.
+\end{align*}
+Exact integer comparison gives
+\[
+ \Pr_A\{C_{16}^{\mathrm{fp}}=0\}>\tfrac12,
+ \quad
+ \Pr_A\{C_{17}^{\mathrm{fp}}=0\}<\tfrac12,
+\]
+and
+\[
+ \Pr_B\{C_{37}^{\mathrm{fp}}=0\}>\tfrac12,
+ \quad
+ \Pr_B\{C_{38}^{\mathrm{fp}}=0\}<\tfrac12.
+\]
+These inequalities prove the proposition.
+\end{proof}
+
+% BEGIN INLINED FILE: figures/fig_finite_database_capacity.tex
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{figure3_finite_database_capacity.pdf}
+\caption{Two fiber profiles in a finite population. For uniform sampling without replacement from $T=1000$ entries, the collision probability is $1-e_M(m_1,\ldots,m_R)/\binom{T}{M}$. Profile A has fibers $(101,1^{899})$ and reaches probability one half at $M_{50}=17$. Profile B has fibers $(2^{500})$ and reaches it at $M_{50}=38$. Although profile A has more occupied values, its larger collision mass gives $M_{50}(A)<M_{50}(B)$. These are hypothetical profiles, not knot-census data.}
+\label{fig:finite-database-capacity}
+\end{figure}
+% END INLINED FILE: figures/fig_finite_database_capacity.tex
+
+\subsection{Programs and data}
+The script
+\begin{center}
+\texttt{python code/generate\_finite\_benchmarks.py --out-dir data}
+\end{center}
+computes elementary symmetric polynomials by exact integer dynamic programming, evaluates all probabilities as rational numbers, and exports
+\begin{itemize}
+ \item \texttt{data/finite\_profile\_summary.csv}, and
+ \item \texttt{data/finite\_no\_collision\_curves.csv}.
+\end{itemize}
+The test program enumerates small finite populations and checks the expectation, variance, no-collision formula, balanced-fiber extremum, support bound, and benchmark percentiles.
+% END INLINED FILE: si/sections/S7_benchmark_protocol.tex
+% BEGIN INLINED FILE: si/sections/S8_cascades.tex
+\section{Adaptive invariant cascades}
+\label{si:cascades}
+An adaptive cascade applies a first invariant to every sampled entry and reserves later invariants for entries that still share a joint fingerprint. An entry that is alone in its current sampled bucket leaves the cascade; pairs that remain together after the last stage are sent to the terminal procedure.
+
+The population is a fixed set $\Omega$ of $T$ distinct entries, and the database $S\subset\Omega$ is a uniform $M$-subset.  Every expectation is therefore with respect to sampling without replacement from one finite population.  The invariant values themselves are deterministic labels on $\Omega$.
+
+\subsection{Sample buckets, singleton objects, and unresolved pairs}
+Let $J$ be a fingerprint with population fibers $F_{J,v}$ of sizes $m_{J,v}$. The sampled $J$-bucket of value $v$ is $S\cap F_{J,v}$. For a sampled database $S$, write
+\[
+ N_{J,v}(S)=|S\cap F_{J,v}|.
+\]
+Define the three sample-level statistics
+\begin{align}
+ S_J^{\mathrm{obs}}(S)
+   &=\sum_v N_{J,v}(S)\,\mathbf 1_{\{N_{J,v}(S)=1\}},
+   \label{si:eq:observed-singletons}\\
+ U_J^{\mathrm{obs}}(S)
+   &=\sum_v N_{J,v}(S)\,\mathbf 1_{\{N_{J,v}(S)\ge2\}}
+     =M-S_J^{\mathrm{obs}}(S),
+   \label{si:eq:observed-survivors}\\
+ C_J(S)
+   &=\sum_v\binom{N_{J,v}(S)}2.
+   \label{si:eq:observed-pairs}
+\end{align}
+Thus $S_J^{\mathrm{obs}}$ counts entries already unique inside the sampled database, $U_J^{\mathrm{obs}}$ counts entries that must proceed to a refinement, and $C_J$ counts unresolved pairs.
+
+\begin{lemma}[Expected singleton and survivor counts]
+\label{si:lem:singleton-survivor}
+For $1\le M\le T$,
+\begin{align}
+ S_J(M):=\mathbb E S_J^{\mathrm{obs}}
+ &=\frac{1}{\binom TM}
+   \sum_v m_{J,v}\binom{T-m_{J,v}}{M-1},
+ \label{si:eq:expected-singletons}\\
+ U_J(M):=\mathbb E U_J^{\mathrm{obs}}
+ &=M-S_J(M).
+ \label{si:eq:expected-survivors}
+\end{align}
+\end{lemma}
+
+\begin{proof}
+Fix an entry $x\in F_{J,v}$.  A sampled $M$-subset contains $x$ and no other entry of its $J$-fiber in exactly
+$\binom{T-m_{J,v}}{M-1}$ ways: after selecting $x$, all remaining entries must be chosen from the $T-m_{J,v}$ entries outside $F_{J,v}$.  Dividing by $\binom TM$ and summing the indicator over the $m_{J,v}$ entries of every fiber gives \eqref{si:eq:expected-singletons}.  \eqref{si:eq:expected-survivors} follows pointwise from \eqref{si:eq:observed-survivors}.
+\end{proof}
+
+\begin{lemma}[Expected unresolved-pair count]
+\label{si:lem:expected-pairs}
+For $0\le M\le T$,
+\begin{equation}
+ P_J(M):=\mathbb E C_J
+ =\frac{\binom M2}{\binom T2}\sum_v\binom{m_{J,v}}2
+ =\binom M2\alpha_J^{\neqp}.
+ \label{si:eq:expected-pairs}
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Every unordered pair of distinct population entries belongs to a uniform $M$-subset with probability $\binom M2/\binom T2$.  Summing over the $\sum_v\binom{m_{J,v}}2$ equal-$J$ population pairs proves the formula.
+\end{proof}
+
+Both lemmas depend only on the fibers of the joint fingerprint $J$ and remain valid for arbitrarily dependent component invariants.
+
+\subsection{Expected workload}
+Let $I_1,\ldots,I_k$ be invariants and
+\[
+ J_j=(I_1,\ldots,I_j)
+\]
+their prefix fingerprints.  The adaptive policy evaluates $I_1$ on every sampled entry.  For $j\ge2$, it evaluates $I_j$ exactly on the entries lying in nonsingleton sampled $J_{j-1}$-buckets.  Since $J_j$ refines $J_{j-1}$, pairs separated by one prefix remain separated by every later prefix, so no skipped evaluation can affect the final unresolved-pair set.
+
+Assume a deterministic cost $c_j\ge0$ per evaluation of $I_j$ and a deterministic cost $f\ge0$ for each pair passed to the terminal complete procedure.  For a realized sample $S$, the workload is
+\begin{equation}
+ W(S)
+ =Mc_1+\sum_{j=2}^k c_jU_{J_{j-1}}^{\mathrm{obs}}(S)
+   +fC_{J_k}(S).
+ \label{si:eq:observed-workload}
+\end{equation}
+
+\begin{theorem}[Expected cascade workload]
+\label{si:thm:cascade-workload}
+Under the finite-population law above,
+\begin{equation}
+ \boxed{
+ \mathbb EW
+ =Mc_1+\sum_{j=2}^k c_jU_{J_{j-1}}(M)
+   +fP_{J_k}(M).}
+ \label{si:eq:cascade-workload}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Take expectations in \eqref{si:eq:observed-workload} and apply Lemmas~\ref{si:lem:singleton-survivor} and \ref{si:lem:expected-pairs}.
+\end{proof}
+
+\eqref{si:eq:cascade-workload} assumes constant costs. For object-dependent evaluation costs, the object indicators may instead be weighted by their individual costs.  If the terminal cost is nonlinear in bucket size, $fC_{J_k}$ must be replaced by the corresponding bucket functional. The main text uses the constant-cost formula above.
+
+\subsection{Ordering and marginal break-even rules}
+Consider two invariants $A$ and $B$.  Compare policies that evaluate both coordinates adaptively and then invoke the same terminal procedure on the same joint fingerprint $(A,B)$.  Their expected workloads are
+\begin{align*}
+ \mathbb EW_{A\to B}
+ &=Mc_A+c_BU_A(M)+fP_{A,B}(M),\\
+ \mathbb EW_{B\to A}
+ &=Mc_B+c_AU_B(M)+fP_{A,B}(M).
+\end{align*}
+
+\begin{proposition}[Two-stage ordering criterion]
+\label{si:prop:ordering}
+The order $A\to B$ is no more expensive than $B\to A$ exactly when
+\begin{equation}
+ c_AS_B(M)\le c_BS_A(M).
+ \label{si:eq:ordering}
+\end{equation}
+When both expected singleton counts are positive, this is equivalent to
+\begin{equation}
+ \frac{c_A}{S_A(M)}\le\frac{c_B}{S_B(M)}.
+ \label{si:eq:cost-per-singleton}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Using $U_A=M-S_A$ and $U_B=M-S_B$,
+\[
+ \mathbb EW_{A\to B}-\mathbb EW_{B\to A}
+ =c_AS_B(M)-c_BS_A(M).
+\]
+The common joint-fallback term cancels.
+\end{proof}
+
+\eqref{si:eq:cost-per-singleton} ranks two-stage orders by cost per expected sample singleton resolved.  For longer cascades, minimization uses the full objective in \eqref{si:eq:cascade-workload}; pairwise greedy ordering need not minimize it.
+
+Now fix a prefix $J$ and consider adding one more invariant $I$ before the same terminal pairwise fallback.  Without $I$, the terminal expected cost is $fP_J(M)$.  With $I$, the additional evaluation cost is $c_IU_J(M)$ and the terminal expected cost is $fP_{J,I}(M)$.
+
+\begin{proposition}[Marginal break-even rule]
+\label{si:prop:break-even}
+Adding $I$ after $J$ does not increase expected cost exactly when
+\begin{equation}
+ c_IU_J(M)
+ \le
+ f\bigl[P_J(M)-P_{J,I}(M)\bigr].
+ \label{si:eq:break-even}
+\end{equation}
+If $P_J(M)>P_{J,I}(M)$, the critical fallback cost is
+\begin{equation}
+ f_{\mathrm{crit}}(I\mid J)
+ =\frac{c_IU_J(M)}{P_J(M)-P_{J,I}(M)}.
+ \label{si:eq:critical-fallback}
+\end{equation}
+If the new coordinate removes no unresolved pairs, it cannot reduce workload at positive evaluation cost.
+\end{proposition}
+
+\begin{proof}
+Subtract the expected workload without $I$ from the workload with $I$ and rearrange.  Since $(J,I)$ refines $J$, the pair reduction in \eqref{si:eq:break-even} is nonnegative.
+\end{proof}
+
+\subsection{A nested finite example}
+The nested profile below gives both the number of entries evaluated and the number of pairs reaching the terminal procedure. It also gives numerical instances of the ordering and break-even criteria.
+The population contains $T=1000$ labeled entries.  At the first stage, $899$ entries are singleton fibers and the remaining $101$ entries form one heavy fiber.  The second coordinate divides $100$ entries of that heavy fiber into twenty quintuplets and leaves the last entry singleton.  The third coordinate divides each quintuplet into one pair and three singletons.  Thus the prefix profiles are
+\begin{equation}
+ J_1=(101,1^{899}),\qquad
+ J_2=(5^{20},1^{900}),\qquad
+ J_3=(2^{20},1^{960}).
+ \label{si:eq:benchmark-profiles}
+\end{equation}
+In the explicit object labels, $I_2$ determines $I_1$ and $I_3$ determines $I_2$.  Hence an $I_2$-only policy has the $J_2$ fibers, and an $I_1\to I_3$ policy has the $J_3$ fibers even though the intermediate coordinate is not evaluated.
+The corresponding numbers of equal-prefix population pairs are
+\begin{equation}
+ Q_{J_1}=5050,
+ \qquad
+ Q_{J_2}=200,
+ \qquad
+ Q_{J_3}=20.
+ \label{si:eq:benchmark-pop-pairs}
+\end{equation}
+
+For $M=100$, Table~\ref{si:tab:cascade-summary} gives the expected counts.  The singleton numerators follow directly from \eqref{si:eq:expected-singletons}; for example,
+\begin{align*}
+ S_{J_1}(100)
+ &=\frac{899\binom{999}{99}+101\binom{899}{99}}{\binom{1000}{100}},\\
+ S_{J_2}(100)
+ &=\frac{900\binom{999}{99}+100\binom{995}{99}}{\binom{1000}{100}},\\
+ S_{J_3}(100)
+ &=\frac{960\binom{999}{99}+40\binom{998}{99}}{\binom{1000}{100}}.
+\end{align*}
+
+\begin{table}[ht]
+\centering
+\caption{Sample-level expectations in the finite cascade.  Decimals are shown only for readability; the associated CSV files retain the rational numerators and denominators.}
+\label{si:tab:cascade-summary}
+\begin{tabular}{lrrrr}
+\toprule
+Prefix & Occupied values & Population pairs & $U_J(100)$ & $P_J(100)$\\
+\midrule
+$J_1$ & 900 & 5050 & 10.099835 & $5555/111=50.045045$\\
+$J_2$ & 920 & 200 & 3.417052 & $220/111=1.981982$\\
+$J_3$ & 980 & 20 & $44/111=0.396396$ & $22/111=0.198198$\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+To compare policies, assign the illustrative constant costs
+\[
+ (c_1,c_2,c_3)=(1,12,40),
+ \qquad
+ f=100.
+\]
+These values are part of the synthetic example and are not empirical timing measurements.
+Substitution in \eqref{si:eq:cascade-workload} gives Table~\ref{si:tab:cascade-costs}.
+
+\begin{table}[ht]
+\centering
+\caption{Expected workload for selected policies in the finite example.}
+\label{si:tab:cascade-costs}
+\begin{tabular}{lr}
+\toprule
+Policy & $\mathbb EW$\\
+\midrule
+$I_1$ then fallback & 5104.5045\\
+$I_2$ then fallback & 1398.1982\\
+$I_2\to I_1$ then fallback & 1401.6152\\
+$I_1\to I_2$ then fallback & 419.3962\\
+$I_1\to I_3$ then fallback & 523.8132\\
+$I_1\to I_2\to I_3$ then fallback & 377.6999\\
+all three coordinates on all entries & 5319.8198\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+For the first two coordinates,
+\[
+ c_1S_{J_2}(100)=96.5829
+ <1078.8020=c_2S_{J_1}(100),
+\]
+so Proposition~\ref{si:prop:ordering} shows that $I_1\to I_2$ has lower expected cost.  The break-even thresholds are
+\begin{align*}
+ f_{\mathrm{crit}}(I_2\mid J_1)&=2.521646,\\
+ f_{\mathrm{crit}}(I_3\mid J_2)&=76.624792.
+\end{align*}
+At $f=100$, both break-even inequalities hold; the reduction obtained from the third stage is smaller.
+
+% BEGIN INLINED FILE: figures/fig_adaptive_cascade.tex
+\begin{figure}[t]
+\centering
+% External asset edit required: enlarge ordinary lettering to at least 6 pt
+% at the included size (smallest reported labels: about 5.48 pt).
+\includegraphics[width=\linewidth]{figure4_adaptive_cascade.pdf}
+\caption{Expected workload for an adaptive cascade on an explicitly labeled population of $T=1000$ entries. The first invariant is evaluated on every sampled entry; each later invariant is evaluated only on entries lying in nonsingleton buckets of the preceding prefix fingerprint. The joint values available after stage $j$ form $J_j=(I_1,\ldots,I_j)$. (A) The numbers of population pairs unresolved by $J_1,J_2,J_3$ are $5050$, $200$, and $20$, respectively. In a uniform $M=100$ subset, the expected numbers of entries evaluated by $I_2$ and $I_3$ are $10.1$ and $3.417$, respectively, and the expected number of pairs reaching the terminal procedure is $0.198$. (B) The bars give invariant-evaluation and terminal costs for $(c_1,c_2,c_3,f)=(1,12,40,100)$. The adaptive cascade has expected cost $377.7$, compared with $5104.5$ for $I_1$ followed by the terminal procedure and $5319.8$ when every invariant is evaluated on every entry. This hypothetical population is not knot-census data.}
+\label{fig:adaptive-cascade}
+\end{figure}
+% END INLINED FILE: figures/fig_adaptive_cascade.tex
+
+\subsection{Programs and data}
+The command
+\begin{center}
+\texttt{python code/generate\_cascade\_benchmarks.py --out-dir data}
+\end{center}
+regenerates:
+\begin{itemize}
+ \item \texttt{cascade\_population.csv}, containing all $1000$ object-level labels;
+ \item \texttt{cascade\_summary.csv}, containing exact singleton, survivor, and pair expectations;
+ \item \texttt{cascade\_workloads.csv}, containing exact policy costs; and
+ \item \texttt{cascade\_ordering\_break\_even.csv}, containing the ordering and marginal thresholds.
+\end{itemize}
+The test program enumerates small sampled populations and checks Eqs.~(\ref{si:eq:expected-singletons}), (\ref{si:eq:expected-pairs}), (\ref{si:eq:cascade-workload}), (\ref{si:eq:ordering}), and (\ref{si:eq:break-even}).  All displayed benchmark values use integers and rational arithmetic.
+
+The example is a hypothetical finite population.  An application to a knot census would supply the object identifiers, invariant normalizations, duplicate policy, and generating program specified in Section~\ref{si:census-computations}.
+% END INLINED FILE: si/sections/S8_cascades.tex
+% BEGIN INLINED FILE: si/sections/S9_reproducibility.tex
+\section{Computations and source files}
+\label{sec:si-reproducibility}
+The figures, supporting programs, and combined manuscript and Supporting Information PDF are available in the project repository at \href{https://github.com/pedro9olivares/knots-blackholes-databases-birthdays}{github.com/pedro9olivares/knots-blackholes-databases-birthdays}.
+\FloatBarrier
+% END INLINED FILE: si/sections/S9_reproducibility.tex
+% BEGIN INLINED FILE: references_si.tex
+\begin{thebibliography}{99}
+
+\bibitem{renyi1961}
+A. R\'enyi, On measures of entropy and information. In \emph{Proceedings of the Fourth Berkeley Symposium on Mathematical Statistics and Probability}, Vol. 1, pp. 547--561 (University of California Press, 1961).
+\bibitem{arratiagoldsteingordon1989}
+R. Arratia, L. Goldstein, and L. Gordon, Two moments suffice for Poisson approximations: The Chen--Stein method. \emph{Ann. Probab.} \textbf{17}, 9--25 (1989).
+\bibitem{barbourholstjanson1992}
+A. D. Barbour, L. Holst, and S. Janson, \emph{Poisson Approximation} (Clarendon Press, Oxford, 1992).
+\bibitem{chapman2017}
+H. Chapman, Asymptotic laws for random knot diagrams. \emph{J. Phys. A: Math. Theor.} \textbf{50}, 225001 (2017).
+\bibitem{lickorish1997}
+W. B. R. Lickorish, \emph{An Introduction to Knot Theory} (Springer, New York, 1997).
+\bibitem{jones1985}
+V. F. R. Jones, A polynomial invariant for knots via von Neumann algebras. \emph{Bull. Am. Math. Soc.} \textbf{12}, 103--111 (1985).
+\bibitem{freydetal1985}
+P. Freyd, D. Yetter, J. Hoste, W. B. R. Lickorish, K. Millett, and A. Ocneanu, A new polynomial invariant of knots and links. \emph{Bull. Am. Math. Soc.} \textbf{12}, 239--246 (1985).
+\bibitem{khovanov2000}
+M. Khovanov, A categorification of the Jones polynomial. \emph{Duke Math. J.} \textbf{101}, 359--426 (2000).
+\bibitem{ozsvathszabo2004}
+P. Ozsv\'ath and Z. Szab\'o, Holomorphic disks and knot invariants. \emph{Adv. Math.} \textbf{186}, 58--116 (2004).
+\bibitem{gordonlitherland1978}
+C. McA. Gordon and R. A. Litherland, On the signature of a link. \emph{Invent. Math.} \textbf{47}, 53--69 (1978).
+\bibitem{bareiss1968}
+E. H. Bareiss, Sylvester's identity and multistep integer-preserving Gaussian elimination. \emph{Math. Comp.} \textbf{22}, 565--578 (1968).
+\bibitem{haken1961}
+W. Haken, Theorie der Normalfl\"achen. \emph{Acta Math.} \textbf{105}, 245--375 (1961).
+\bibitem{hemion1992}
+G. Hemion, \emph{The Classification of Knots and 3-Dimensional Spaces} (Oxford University Press, Oxford, 1992).
+\bibitem{hasslagariaspippenger1999}
+J. Hass, J. C. Lagarias, and N. Pippenger, The computational complexity of knot and link problems. \emph{J. ACM} \textbf{46}, 185--211 (1999).
+\bibitem{lackenby2021}
+M. Lackenby, The efficient certification of knottedness and Thurston norm. \emph{Adv. Math.} \textbf{387}, 107796 (2021).
+\end{thebibliography}
+% END INLINED FILE: references_si.tex
+\end{document}
+% END INLINED FILE: supporting_information_source.tex
